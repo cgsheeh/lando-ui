@@ -32,7 +32,9 @@ def treestatus():
     trees_response = api.request("GET", "treestatus/trees")
     trees = trees_response.get("result")
     if not trees:
-        return render_template("")
+        # TODO this should load some error or an error should be added
+        # to the trees view.
+        return render_template("treestatus/trees.html")
 
     return render_template("treestatus/trees.html", trees=trees)
 
