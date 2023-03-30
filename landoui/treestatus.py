@@ -3,6 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from flask import (
+    Blueprint,
     current_app,
     render_template,
     session,
@@ -15,11 +16,15 @@ from landoui.landoapi import (
 )
 from landoui.helpers import (
     get_phabricator_api_token,
+    set_last_local_referrer,
 )
 from landoui.pages import pages
 
+treestatus_blueprint = Blueprint("treestatus", __name__)
+treestatus_blueprint.before_request(set_last_local_referrer)
 
-@pages.route("/treestatus", methods=["GET"])
+
+@treestatus_blueprint.route("/treestatus", methods=["GET"])
 def treestatus():
     """Display the status of all the current trees."""
     token = get_phabricator_api_token()
@@ -39,7 +44,7 @@ def treestatus():
     return render_template("treestatus/trees.html", trees=trees)
 
 
-@pages.route("/treestatus/{tree}", methods=["GET"])
+@treestatus_blueprint.route("/treestatus/{tree}", methods=["GET"])
 def treestatus_tree(tree: str):
     """Display the log of statuses for a given tree."""
     token = get_phabricator_api_token()
