@@ -13,14 +13,29 @@
     <p>Current status of Mozilla's version-control repositories.</p>
 
     <h2>Trees<h2>
-    {% for name, tree in trees.items() %}
-        <h3>{{ name }}</h3>
-        <ul>
-            <li>Message of the Day: {{ tree.message_of_the_day }}</li>
-            <li>Reason: {{ tree.reason }}</li>
-            <li>Status: {{ tree.status }}</li>
-            <li>Tags: {{ ", ".join(tree.tags) }}</li>
-        </ul>
-    {% endfor %}
+    <div class="StackPage-stack">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Reason</th>
+                    <th>Tags</th>
+                    <th>Message of the Day</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for name, tree in trees.items() %}
+                    <tr>
+                        <td>{{ name }}</td>
+                        <td><span class="{{ tree.status | treestatus_to_status_badge_class }}">{{ tree.status }}</span></td>
+                        <td>{{ tree.reason }}</td>
+                        <td>{{ ", ".join(tree.tags) }}</td>
+                        <td>{{ tree.message_of_the_day }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </main>
 {% endblock %}
