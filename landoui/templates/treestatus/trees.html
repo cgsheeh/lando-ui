@@ -13,7 +13,7 @@
     <p>Current status of Mozilla's version-control repositories.</p>
 
     <h2>Trees<h2>
-    {% for name, tree in trees %}
+    {% for name, tree in trees.items() %}
         <h3>{{ name }}</h3>
         <ul>
             <li>Message of the Day: {{ tree.message_of_the_day }}</li>

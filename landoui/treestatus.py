@@ -39,7 +39,17 @@ def treestatus():
     if not trees:
         # TODO this should load some error or an error should be added
         # to the trees view.
-        return render_template("treestatus/trees.html")
+        fake_trees = {
+            "autoland": {
+                "log_id": 2,
+                "message_of_the_day": "",
+                "reason": "somereason",
+                "status": "open",
+                "tags": ["sometag1", "sometag2"],
+                "tree": "autoland",
+            },
+        }
+        return render_template("treestatus/trees.html", trees=fake_trees)
 
     return render_template("treestatus/trees.html", trees=trees)
 
