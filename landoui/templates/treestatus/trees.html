@@ -27,7 +27,7 @@
             <tbody>
                 {% for name, tree in trees.items() %}
                     <tr>
-                        <td>{{ name }}</td>
+                        <td><a href="treestatus/{{ name }}">{{ name }}</a></td>
                         <td><span class="{{ tree.status | treestatus_to_status_badge_class }}">{{ tree.status }}</span></td>
                         <td>{{ tree.reason }}</td>
                         <td>{{ ", ".join(tree.tags) }}</td>
