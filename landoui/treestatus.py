@@ -23,6 +23,32 @@ from landoui.pages import pages
 treestatus_blueprint = Blueprint("treestatus", __name__)
 treestatus_blueprint.before_request(set_last_local_referrer)
 
+fake_trees = {
+    "autoland": {
+        "log_id": 2,
+        "message_of_the_day": "",
+        "reason": "",
+        "status": "open",
+        "tags": [],
+        "tree": "autoland",
+    },
+    "mozilla-central": {
+        "log_id": 3,
+        "message_of_the_day": "message",
+        "reason": "",
+        "status": "closed",
+        "tags": ["we are CLOSED!"],
+        "tree": "mozilla-central",
+    },
+    "esr102": {
+        "log_id": 4,
+        "message_of_the_day": "approval is required.",
+        "reason": "this is an esr.",
+        "status": "approval required",
+        "tags": ["ESR release train chooo chooo"],
+        "tree": "esr102",
+    },
+}
 
 @treestatus_blueprint.route("/treestatus", methods=["GET"])
 def treestatus():
@@ -39,16 +65,7 @@ def treestatus():
     if not trees:
         # TODO this should load some error or an error should be added
         # to the trees view.
-        fake_trees = {
-            "autoland": {
-                "log_id": 2,
-                "message_of_the_day": "",
-                "reason": "somereason",
-                "status": "open",
-                "tags": ["sometag1", "sometag2"],
-                "tree": "autoland",
-            },
-        }
+        # TODO don't use fake trees here
         return render_template("treestatus/trees.html", trees=fake_trees)
 
     return render_template("treestatus/trees.html", trees=trees)
