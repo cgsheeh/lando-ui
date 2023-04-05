@@ -18,7 +18,6 @@ from landoui.helpers import (
     get_phabricator_api_token,
     set_last_local_referrer,
 )
-from landoui.pages import pages
 
 treestatus_blueprint = Blueprint("treestatus", __name__)
 treestatus_blueprint.before_request(set_last_local_referrer)
