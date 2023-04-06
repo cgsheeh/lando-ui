@@ -14,6 +14,7 @@ from wtforms import (
     BooleanField,
     Field,
     HiddenField,
+    FieldList,
     SelectField,
     StringField,
     TextAreaField,
@@ -120,3 +121,23 @@ class UserSettingsForm(FlaskForm):
         ],
     )
     reset_phab_api_token = BooleanField("Delete", default="")
+
+
+class TreeStatusUpdateForm(FlaskForm):
+    """Form used to update tree statuses."""
+
+    # TODO or should this be `SelectMultipleField`?
+    trees = SelectField(
+        "Trees", validators=[InputRequired("A selection of trees is required.")]
+    )
+
+    status = StringField("Status", validators=[InputRequired("A status is required.")])
+
+    reason = StringField("Reason", validators=[InputRequired("A reason is required.")])
+
+    # TODO default is probably wrong here.
+    remember_this_change = BooleanField(
+        "Remember", default=True, validators=[InputRequired("A reason is required.")]
+    )
+
+    message_of_the_day = StringField("Message of the day")

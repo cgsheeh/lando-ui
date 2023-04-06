@@ -49,6 +49,7 @@ fake_trees = {
     },
 }
 
+
 @treestatus_blueprint.route("/treestatus", methods=["GET"])
 def treestatus():
     """Display the status of all the current trees."""
