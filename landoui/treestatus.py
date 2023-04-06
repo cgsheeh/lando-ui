@@ -11,8 +11,6 @@ from flask import (
 
 from landoui.landoapi import (
     LandoAPI,
-    LandoAPICommunicationException,
-    LandoAPIError,
 )
 from landoui.helpers import (
     get_phabricator_api_token,
