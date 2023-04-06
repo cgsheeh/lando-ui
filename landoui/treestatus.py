@@ -130,10 +130,11 @@ def treestatus_tree(tree: str):
         phabricator_api_token=token,
     )
 
-    tree_response = api.request("GET", f"treestatus/trees/{tree}")
-    tree = tree_response.get("result")
-    if not tree:
-        return render_template("error")
+    # TODO make this work without fake data.
+    # tree_response = api.request("GET", f"treestatus/trees/{tree}/logs_all")
+    # tree = tree_response.get("result")
+    # if not tree:
+    #     return render_template("error")
 
     return render_template("treestatus/log.html", logs=fake_logs)
 
