@@ -1,0 +1,44 @@
+{#
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#}
+
+{% extends "partials/layout.html" %}
+{% block page_title %}Treestatus{% endblock %}
+
+{% block main %}
+<!-- TODO should this page use the same classes as a stack? -->
+<main class="StackPage container fullhd">
+    <h1>Treestatus</h1>
+    <p>Current status of Mozilla's version-control repositories.</p>
+
+    <h2>{{ logs[0].name }}<h2>
+    <div class="StackPage-stack">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Status</th>
+                    <th>Reason</th>
+                    <th>Tags</th>
+                    <th>When</th>
+                    <th>Who</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                    <tr>
+                        <td>{{ log.id }}</td>
+                        <td><span class="{{ log.status | treestatus_to_status_badge_class }}">{{ log.status }}</span></td>
+                        <td>{{ log.reason }}</td>
+                        <td>{{ ", ".join(log.tags) }}</td>
+                        <td>{{ log.when }}</td>
+                        <td>{{ log.who }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}

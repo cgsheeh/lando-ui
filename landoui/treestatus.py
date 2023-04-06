@@ -48,6 +48,53 @@ fake_trees = {
         "tree": "esr102",
     },
 }
+fake_logs = [
+    {
+        "id": 8,
+        "reason": "fourth close",
+        "status": "closed",
+        "tags": ["sometag1"],
+        "tree": "tree",
+        "when": "0001-01-01T01:20:00+00:00",
+        "who": "ad|Example-LDAP|testuser",
+    },
+    {
+        "id": 7,
+        "reason": "fourth open",
+        "status": "open",
+        "tags": [],
+        "tree": "tree",
+        "when": "0001-01-01T01:10:00+00:00",
+        "who": "ad|Example-LDAP|testuser",
+    },
+    {
+        "id": 6,
+        "reason": "third close",
+        "status": "closed",
+        "tags": ["sometag1"],
+        "tree": "tree",
+        "when": "0001-01-01T01:00:00+00:00",
+        "who": "ad|Example-LDAP|testuser",
+    },
+    {
+        "id": 5,
+        "reason": "third open",
+        "status": "open",
+        "tags": [],
+        "tree": "tree",
+        "when": "0001-01-01T00:50:00+00:00",
+        "who": "ad|Example-LDAP|testuser",
+    },
+    {
+        "id": 4,
+        "reason": "second close",
+        "status": "closed",
+        "tags": ["sometag1"],
+        "tree": "tree",
+        "when": "0001-01-01T00:40:00+00:00",
+        "who": "ad|Example-LDAP|testuser",
+    },
+]
 
 
 # TODO doesn't work
@@ -88,7 +135,7 @@ def treestatus_tree(tree: str):
     if not tree:
         return render_template("error")
 
-    return render_template("treestatus/tree.html", tree=tree)
+    return render_template("treestatus/log.html", logs=fake_logs)
 
 
 # TODO doesn't work
