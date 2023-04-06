@@ -73,7 +73,7 @@ def treestatus():
 
 
 # TODO doesn't work
-@treestatus_blueprint.route("/treestatus/{tree}", methods=["GET"])
+@treestatus_blueprint.route("/treestatus/<tree>", methods=["GET"])
 def treestatus_tree(tree: str):
     """Display the log of statuses for a given tree."""
     token = get_phabricator_api_token()
