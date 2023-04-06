@@ -87,3 +87,23 @@ def treestatus_tree(tree: str):
         return render_template("error")
 
     return render_template("treestatus/tree.html", tree=tree)
+
+
+@treestatus_blueprint.route("/treestatus/stack", methods=["GET"])
+def treestatus_stack():
+    """Display the current change stack."""
+    token = get_phabricator_api_token()
+    api = LandoAPI(
+        current_app.config["LANDO_API_URL"],
+        auth0_access_token=session.get("access_token"),
+        phabricator_api_token=token,
+    )
+
+    # TODO is the API endpoint correct here?
+    stack_response = api.request("GET", "treestatus/stack")
+    stack = stack_response.get("result")
+    if not stack:
+        # TODO how to render an error correctly?
+        return render_template("error")
+
+    return render_template("treestatus/stack.html")
