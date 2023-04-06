@@ -50,6 +50,7 @@ fake_trees = {
 }
 
 
+# TODO doesn't work
 @treestatus_blueprint.route("/treestatus", methods=["GET"])
 def treestatus():
     """Display the status of all the current trees."""
@@ -71,6 +72,7 @@ def treestatus():
     return render_template("treestatus/trees.html", trees=trees)
 
 
+# TODO doesn't work
 @treestatus_blueprint.route("/treestatus/{tree}", methods=["GET"])
 def treestatus_tree(tree: str):
     """Display the log of statuses for a given tree."""
@@ -89,6 +91,7 @@ def treestatus_tree(tree: str):
     return render_template("treestatus/tree.html", tree=tree)
 
 
+# TODO doesn't work
 @treestatus_blueprint.route("/treestatus/stack", methods=["GET"])
 def treestatus_stack():
     """Display the current change stack."""
