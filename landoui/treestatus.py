@@ -96,7 +96,7 @@ fake_logs = [
 
 
 # TODO doesn't work
-@treestatus_blueprint.route("/treestatus", methods=["GET"])
+@treestatus_blueprint.route("/treestatus/", methods=["GET"])
 def treestatus():
     """Display the status of all the current trees."""
     token = get_phabricator_api_token()
@@ -118,7 +118,7 @@ def treestatus():
 
 
 # TODO doesn't work
-@treestatus_blueprint.route("/treestatus/<tree>", methods=["GET"])
+@treestatus_blueprint.route("/treestatus/<tree>/", methods=["GET"])
 def treestatus_tree(tree: str):
     """Display the log of statuses for a given tree."""
     token = get_phabricator_api_token()
@@ -138,7 +138,7 @@ def treestatus_tree(tree: str):
 
 
 # TODO doesn't work
-@treestatus_blueprint.route("/treestatus/stack", methods=["GET"])
+@treestatus_blueprint.route("/treestatus/stack/", methods=["GET"])
 def treestatus_stack():
     """Display the current change stack."""
     token = get_phabricator_api_token()
