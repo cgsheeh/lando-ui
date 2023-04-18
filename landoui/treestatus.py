@@ -50,7 +50,7 @@ fake_logs = [
     {
         "id": 8,
         "reason": "fourth close",
-        "status": "closed",
+        "status": "approval required",
         "tags": ["sometag1"],
         "tree": "tree",
         "when": "0001-01-01T01:20:00+00:00",
