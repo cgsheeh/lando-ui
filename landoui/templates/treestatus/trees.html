@@ -22,7 +22,12 @@
             selection to the tree status updating form.
         #}
         {% if is_user_authenticated_TODO() %}
-            <form action="{{ url_for('treestatus.update_treestatus') }}">
+            <form action="{{ url_for('treestatus.update_treestatus') }}" method="post" >
+            {{ treestatus_update_form.csrf_token }}
+            <div>{{ treestatus_update_form.status.label }}: {{ treestatus_update_form.status() }}</div>
+            <div>{{ treestatus_update_form.reason.label }}: {{ treestatus_update_form.reason() }}</div>
+            <div>{{ treestatus_update_form.message_of_the_day.label }}: {{ treestatus_update_form.message_of_the_day() }}</div>
+            <div>{{ treestatus_update_form.remember_this_change.label }}: {{ treestatus_update_form.remember_this_change() }}</div>
             <button class="button" title="Submit">Change tree status</button>
         {% endif %}
         <table class="table">
