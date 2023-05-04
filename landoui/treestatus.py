@@ -9,12 +9,12 @@ from flask import (
     session,
 )
 
-from landoui.landoapi import (
-    LandoAPI,
-)
 from landoui.helpers import (
     get_phabricator_api_token,
     set_last_local_referrer,
+)
+from landoui.landoapi import (
+    LandoAPI,
 )
 
 treestatus_blueprint = Blueprint("treestatus", __name__)
