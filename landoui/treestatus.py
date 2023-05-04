@@ -113,15 +113,25 @@ def treestatus():
         phabricator_api_token=token,
     )
 
+    treestatus_update_form = TreeStatusUpdateForm()
+
     trees_response = api.request("GET", "treestatus/trees")
     trees = trees_response.get("result")
     if not trees:
         # TODO this should load some error or an error should be added
         # to the trees view.
         # TODO don't use fake trees here
-        return render_template("treestatus/trees.html", trees=fake_trees)
+        return render_template(
+            "treestatus/trees.html",
+            trees=fake_trees,
+            treestatus_update_form=treestatus_update_form,
+        )
 
-    return render_template("treestatus/trees.html", trees=trees)
+    return render_template(
+        "treestatus/trees.html",
+        trees=trees,
+        treestatus_update_form=treestatus_update_form,
+    )
 
 
 @treestatus_blueprint.route("/treestatus/update", methods=["POST"])
@@ -168,7 +178,6 @@ def update_treestatus():
 
         errors.append(exc.detail)
         return jsonify(errors=errors), 500
-
 
     # TODO make this redirect to the right plac.
     return redirect("treestatus")
