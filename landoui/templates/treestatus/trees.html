@@ -15,9 +15,23 @@
 
     <h2>Trees<h2>
     <div class="StackPage-stack">
+        {#
+            The main Treestatus page is a table that presents the trees.
+            If the user is authenticated and has proper scopes, also make
+            the page a form which is used to select trees and forward the
+            selection to the tree status updating form.
+        #}
+        {% if is_user_authenticated_TODO() %}
+            <form action="{{ url_for('treestatus.update_treestatus') }}">
+            <button class="button" title="Submit">Change tree status</button>
+        {% endif %}
         <table class="table">
             <thead>
                 <tr>
+
+                    {% if is_user_authenticated_TODO() %}
+                    <th></th>
+                    {% endif %}
                     <th>Name</th>
                     <th>Status</th>
                     <th>Reason</th>
@@ -28,6 +42,11 @@
             <tbody>
                 {% for name, tree in trees.items() %}
                     <tr>
+                        {% if is_user_authenticated_TODO() %}
+                            <td>
+                            <input type="checkbox" id="{{ name }}" name="{{ name }}">
+                            </td>
+                        {% endif %}
                         <td><a href="{{ name }}">{{ name }}</a></td>
                         <td><span class="{{ tree.status | treestatus_to_status_badge_class }}">{{ tree.status }}</span></td>
                         <td>{{ tree.reason }}</td>
@@ -37,6 +56,10 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        {% if is_user_authenticated_TODO() %}
+        </form>
+        {% endif %}
     </div>
 </main>
 {% endblock %}

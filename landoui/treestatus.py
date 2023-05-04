@@ -2,9 +2,13 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import json
+
 from flask import (
     Blueprint,
     current_app,
+    jsonify,
+    redirect,
     render_template,
     session,
 )
@@ -15,6 +19,9 @@ from landoui.helpers import (
 )
 from landoui.landoapi import (
     LandoAPI,
+)
+from landoui.forms import (
+    TreeStatusUpdateForm,
 )
 
 treestatus_blueprint = Blueprint("treestatus", __name__)
@@ -115,6 +122,56 @@ def treestatus():
         return render_template("treestatus/trees.html", trees=fake_trees)
 
     return render_template("treestatus/trees.html", trees=trees)
+
+
+@treestatus_blueprint.route("/treestatus/update", methods=["POST"])
+def update_treestatus():
+    """Handler for the tree status updating form."""
+    api = LandoAPI(
+        current_app.config["LANDO_API_URL"],
+        auth0_access_token=session.get("access_token"),
+        phabricator_api_token=get_phabricator_api_token(),
+    )
+    treestatus_update_form = TreeStatusUpdateForm()
+
+    return_code = None
+
+    errors = []
+
+    if not treestatus_update_form.is_submitted():
+        # TODO fix this.
+        return jsonify(errors=[]), 401
+
+    if not is_user_authenticated():
+        # TODO fix this.
+        return jsonify(errors=[]), 401
+
+    if not treestatus_update_form.validate():
+        for field_errors in treestatus_update_form.errors.values():
+            errors.extend(field_errors)
+        return jsonify(errors=errors), 400
+
+    try:
+        # TODO get fields from the form here.
+        pass
+    except json.JSONDecodeError as exc:
+        raise LandoAPICommunicationException(
+            "Landing path could not be decoded as JSON"
+        ) from exc
+
+    try:
+        # TODO is this the right path?
+        response = api.request("POST", "treestatus/update")
+    except LandoAPIError as exc:
+        if not exc.detail:
+            raise exc
+
+        errors.append(exc.detail)
+        return jsonify(errors=errors), 500
+
+
+    # TODO make this redirect to the right plac.
+    return redirect("treestatus")
 
 
 # TODO doesn't work
