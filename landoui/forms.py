@@ -131,7 +131,15 @@ class TreeStatusUpdateForm(FlaskForm):
         "Trees", validators=[InputRequired("A selection of trees is required.")]
     )
 
-    status = StringField("Status", validators=[InputRequired("A status is required.")])
+    status = SelectField(
+        "Status",
+        choices=[
+            ("Open", "open"),
+            ("Closed", "closed"),
+            ("Approval Required", "approval required"),
+        ],
+        validators=[InputRequired("A status is required.")],
+    )
 
     reason = StringField("Reason", validators=[InputRequired("A reason is required.")])
 
