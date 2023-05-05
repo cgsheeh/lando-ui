@@ -13,12 +13,14 @@ from flask_wtf import FlaskForm
 from wtforms import (
     BooleanField,
     Field,
-    HiddenField,
     FieldList,
+    HiddenField,
     SelectField,
+    SelectMultipleField,
     StringField,
     TextAreaField,
     ValidationError,
+    widgets,
 )
 from wtforms.validators import InputRequired, optional, Regexp
 
@@ -123,11 +125,18 @@ class UserSettingsForm(FlaskForm):
     reset_phab_api_token = BooleanField("Delete", default="")
 
 
+class MultiCheckboxField(SelectMultipleField):
+    """Multiple select with a series of checkboxes."""
+
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
+
+
 class TreeStatusUpdateForm(FlaskForm):
     """Form used to update tree statuses."""
 
     # TODO or should this be `SelectMultipleField`?
-    trees = SelectField(
+    trees = MultiCheckboxField(
         "Trees", validators=[InputRequired("A selection of trees is required.")]
     )
 
