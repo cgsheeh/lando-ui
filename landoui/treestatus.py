@@ -146,8 +146,6 @@ def update_treestatus():
     )
     treestatus_update_form = TreeStatusUpdateForm()
 
-    return_code = None
-
     errors = []
 
     if not treestatus_update_form.is_submitted():
@@ -156,21 +154,32 @@ def update_treestatus():
 
     if not is_user_authenticated_TODO():
         # TODO fix this.
-        return jsonify(errors=[]), 401
+        return jsonify(errors=["Not authenticated."]), 401
 
-    if not treestatus_update_form.validate():
-        for field_errors in treestatus_update_form.errors.values():
-            errors.extend(field_errors)
-        return jsonify(errors=errors), 400
+    # if not treestatus_update_form.validate():
+    #     for field_errors in treestatus_update_form.errors.values():
+    #         errors.extend(field_errors)
+    #     return jsonify(errors=errors), 400
 
     try:
-        # TODO is this the right way to get data from the form?
         trees = treestatus_update_form.trees.data
         status = treestatus_update_form.status.data
         reason = treestatus_update_form.reason.data
         message_of_the_day = treestatus_update_form.message_of_the_day.data
         tags = treestatus_update_form.tags.data
         remember = treestatus_update_form.remember_this_change.data
+        return jsonify(
+            errors=[
+                {
+                    "trees": trees,
+                    "status": status,
+                    "reason": reason,
+                    "message_of_the_day": message_of_the_day,
+                    "tags": tags,
+                    "remember": remember,
+                }
+            ]
+        )
     except json.JSONDecodeError as exc:
         raise LandoAPICommunicationException(
             "Landing path could not be decoded as JSON"
