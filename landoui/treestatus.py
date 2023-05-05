@@ -170,8 +170,19 @@ def update_treestatus():
         ) from exc
 
     try:
-        # TODO is this the right path?
-        response = api.request("POST", "treestatus/update")
+        response = api.request(
+            "PATCH",
+            "treestatus/trees",
+            require_auth0=True,
+            json={
+                "trees": [],
+                "status": "",
+                "reason": "",
+                "message_of_the_day": "",
+                "tags": [],
+                "remember": True,
+            },
+        )
     except LandoAPIError as exc:
         if not exc.detail:
             raise exc
