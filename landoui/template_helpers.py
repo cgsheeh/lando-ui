@@ -30,7 +30,7 @@ def is_user_authenticated() -> bool:
 # TODO remove this
 @template_helpers.app_template_global()
 def is_user_authenticated_TODO() -> bool:
-    return True
+    return helpers.is_user_authenticated_TODO()
 
 @template_helpers.app_template_global()
 def user_has_phabricator_token() -> bool:
