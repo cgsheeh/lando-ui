@@ -143,6 +143,9 @@ class TreeStatusUpdateForm(FlaskForm):
 
     reason = StringField("Reason", validators=[InputRequired("A reason is required.")])
 
+    # TODO this is wrong.
+    tags = SelectField("Tags")
+
     # TODO default is probably wrong here.
     remember_this_change = BooleanField(
         "Remember", default=True, validators=[InputRequired("A reason is required.")]
