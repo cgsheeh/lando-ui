@@ -190,7 +190,7 @@ def update_treestatus():
         errors.append(exc.detail)
         return jsonify(errors=errors), 500
 
-    # TODO make this redirect to the right plac.
+    # TODO make this redirect to the right place.
     return redirect("treestatus")
 
 
