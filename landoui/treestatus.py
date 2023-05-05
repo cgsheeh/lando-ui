@@ -162,8 +162,13 @@ def update_treestatus():
         return jsonify(errors=errors), 400
 
     try:
-        # TODO get fields from the form here.
-        pass
+        # TODO is this the right way to get data from the form?
+        trees = treestatus_update_form.trees.data
+        status = treestatus_update_form.status.data
+        reason = treestatus_update_form.reason.data
+        message_of_the_day = treestatus_update_form.message_of_the_day.data
+        tags = treestatus_update_form.tags.data
+        remember = treestatus_update_form.remember_this_change.data
     except json.JSONDecodeError as exc:
         raise LandoAPICommunicationException(
             "Landing path could not be decoded as JSON"
