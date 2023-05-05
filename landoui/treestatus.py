@@ -15,6 +15,8 @@ from flask import (
 
 from landoui.helpers import (
     get_phabricator_api_token,
+    is_user_authenticated,
+    is_user_authenticated_TODO,
     set_last_local_referrer,
 )
 from landoui.landoapi import (
@@ -152,7 +154,7 @@ def update_treestatus():
         # TODO fix this.
         return jsonify(errors=[]), 401
 
-    if not is_user_authenticated():
+    if not is_user_authenticated_TODO():
         # TODO fix this.
         return jsonify(errors=[]), 401
 
