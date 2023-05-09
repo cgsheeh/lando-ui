@@ -44,21 +44,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for name, label in treestatus_update_form.trees.choices %}
-                    {% set tree = trees[name] %}
-                    <tr>
-                        {% if is_user_authenticated_TODO() %}
-                            <td>
-                            {{ treestatus_update_form.trees }}
-                            </td>
-                        {% endif %}
-                        <td><a href="{{ name }}">{{ name }}</a></td>
-                        <td><span class="{{ tree.status | treestatus_to_status_badge_class }}">{{ tree.status }}</span></td>
-                        <td>{{ tree.reason }}</td>
-                        <td>{{ ", ".join(tree.tags) }}</td>
-                        <td>{{ tree.message_of_the_day }}</td>
-                    </tr>
-                {% endfor %}
+                {{ treestatus_update_form.trees(trees=trees)|safe }}
             </tbody>
         </table>
 

@@ -24,6 +24,8 @@ from wtforms import (
 )
 from wtforms.validators import InputRequired, optional, Regexp
 
+# from landoui.template_helpers import treestatus_to_status_badge_class
+
 
 class JSONDecodable:
     def __init__(
@@ -125,11 +127,43 @@ class UserSettingsForm(FlaskForm):
     reset_phab_api_token = BooleanField("Delete", default="")
 
 
+def tree_table_widget(field, trees: dict[str, dict], **kwargs):
+    """Render a table with checkbox elements as a selection."""
+    kwargs.setdefault("type", "checkbox")
+    field_id = kwargs.pop("id", field.id)
+
+    html = []
+
+    for value, label, checked in field.iter_choices():
+        tree = trees[value]
+
+        options = dict(kwargs, name=field.name, value=value, id=field_id)
+        checkbox_options = widgets.html_params(**options)
+        row = (
+            "<tr>"
+            f"<td><input {checkbox_options} /></td>"
+            f'<td><a href="{value}">{value}</a></td>'
+            # f'<td><span class="{treestatus_to_status_badge_class(tree["status"])}">{tree["status"]}</span></td>'
+            f'<td><span class="{tree["status"]}">{tree["status"]}</span></td>'
+            f"<td>{tree['reason']}</td>"
+            f"<td>{', '.join(tree['tags'])}</td>"
+            f"<td>{tree['message_of_the_day']}</td>"
+            "</tr>"
+        )
+        html.append(row)
+
+    return "\n".join(html)
+
+
+class TableSelectWidget(widgets.TableWidget):
+    def __call__(self, field, trees=None, **kwargs):
+        return tree_table_widget(field, trees=trees)
+
+
 class MultiCheckboxField(SelectMultipleField):
     """Multiple select with a series of checkboxes."""
 
-    widget = widgets.ListWidget(prefix_label=False)
-    option_widget = widgets.CheckboxInput()
+    widget = TableSelectWidget()
 
 
 class TreeStatusUpdateForm(FlaskForm):
