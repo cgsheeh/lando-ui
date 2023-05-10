@@ -230,7 +230,7 @@ def treestatus_tree(tree: str):
 
     # TODO use real logs.
     # return render_template("treestatus/log.html", logs=logs)
-    return render_template("treestatus/log.html", logs=fake_logs)
+    return render_template("treestatus/log.html", logs=fake_logs, tree=tree)
 
 
 # TODO doesn't work

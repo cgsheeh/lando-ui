@@ -10,10 +10,9 @@
 {% block main %}
 <!-- TODO should this page use the same classes as a stack? -->
 <main class="StackPage container fullhd">
-    <h1>Treestatus</h1>
+    <h1>Treestatus: {{ tree }}</h1>
     <p>Current status of Mozilla's version-control repositories.</p>
 
-    <h2>{{ logs[0].name }}<h2>
     <div class="StackPage-stack">
         <table class="table">
             <thead>
