@@ -182,9 +182,9 @@ class TreeStatusUpdateForm(FlaskForm):
     status = SelectField(
         "Status",
         choices=[
-            ("Open", "open"),
-            ("Closed", "closed"),
-            ("Approval Required", "approval required"),
+            ("open", "Open"),
+            ("closed", "Closed"),
+            ("approval required", "Approval Required"),
         ],
         validators=[InputRequired("A status is required.")],
     )
