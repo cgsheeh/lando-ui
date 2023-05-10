@@ -39,6 +39,8 @@ def user_has_phabricator_token() -> bool:
 
 @template_helpers.app_template_global()
 def new_settings_form() -> UserSettingsForm:
+    # TODO should we just pass a user settings form in places we need it?
+    # why are we initializing this in the template helpers code?
     return UserSettingsForm()
 
 
