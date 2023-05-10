@@ -22,7 +22,12 @@ from wtforms import (
     ValidationError,
     widgets,
 )
-from wtforms.validators import InputRequired, optional, Regexp
+from wtforms.validators import (
+    DataRequired,
+    InputRequired,
+    Regexp,
+    optional,
+)
 
 # from landoui.template_helpers import treestatus_to_status_badge_class
 
@@ -169,9 +174,9 @@ class MultiCheckboxField(SelectMultipleField):
 class TreeStatusUpdateForm(FlaskForm):
     """Form used to update tree statuses."""
 
-    # TODO or should this be `SelectMultipleField`?
     trees = MultiCheckboxField(
-        "Trees", validators=[InputRequired("A selection of trees is required.")]
+        # TODO this isn't properly checking the data is passed as I cna still pass empty trees.
+        "Trees", validators=[DataRequired("A selection of trees is required.")]
     )
 
     status = SelectField(
