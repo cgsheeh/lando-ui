@@ -13,6 +13,9 @@
     <p>Current status of Mozilla's version-control repositories.</p>
 
     <div class="StackPage-stack">
+        <form action="{{ url_for("treestatus.treestatus_stack_pop") }}" method="post">
+            {{ stack_pop_form.clear() }}
+        </form>
         <table class="table">
             <thead>
                 <tr>

@@ -23,6 +23,7 @@ from landoui.landoapi import (
     LandoAPI,
 )
 from landoui.forms import (
+    TreeStatusPopStackForm,
     TreeStatusUpdateForm,
 )
 
@@ -305,6 +306,25 @@ def treestatus_tree(tree: str):
     return render_template("treestatus/log.html", logs=fake_logs, tree=tree)
 
 
+@treestatus_blueprint.route("/treestatus/stack/", methods=["POST"])
+def treestatus_stack_pop():
+    """Handle removing an element off the Treestatus stack."""
+    token = get_phabricator_api_token()
+    api = LandoAPI(
+        current_app.config["LANDO_API_URL"],
+        auth0_access_token=session.get("access_token"),
+        phabricator_api_token=token,
+    )
+
+    stack_pop_form = TreeStatusPopStackForm()
+
+    if not is_user_authenticated_TODO():
+        return jsonify(errors=["Not authenticated."]), 401
+
+    # TODO hook this up to the actual API
+    return jsonify(returned=[stack_pop_form.clear.data])
+
+
 # TODO doesn't work
 @treestatus_blueprint.route("/treestatus/stack/", methods=["GET"])
 def treestatus_stack():
@@ -316,6 +336,8 @@ def treestatus_stack():
         phabricator_api_token=token,
     )
 
+    stack_pop_form = TreeStatusPopStackForm()
+
     # TODO is the API endpoint correct here?
     # stack_response = api.request("GET", "treestatus/stack")
     # stack = stack_response.get("result")
@@ -324,4 +346,6 @@ def treestatus_stack():
     #     return render_template("error")
 
     # TODO make this work without fake data
-    return render_template("treestatus/stack.html", stack=fake_stack)
+    return render_template(
+        "treestatus/stack.html", stack=fake_stack, stack_pop_form=stack_pop_form
+    )

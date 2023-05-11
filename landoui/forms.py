@@ -18,6 +18,7 @@ from wtforms import (
     SelectField,
     SelectMultipleField,
     StringField,
+    SubmitField,
     TextAreaField,
     ValidationError,
     widgets,
@@ -200,3 +201,9 @@ class TreeStatusUpdateForm(FlaskForm):
     )
 
     message_of_the_day = StringField("Message of the day")
+
+
+class TreeStatusPopStackForm(FlaskForm):
+    """Clear an entry off the treestatus stack."""
+
+    clear = SubmitField("Clear")
