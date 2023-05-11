@@ -102,6 +102,45 @@ fake_logs = [
         "who": "ad|Example-LDAP|testuser",
     },
 ]
+fake_stack = [
+    {
+        "id": 1,
+        "reason": "somereason",
+        "status": "open",
+        "trees": [
+            {
+                "id": 1,
+                "last_state": {
+                    "current_log_id": 1,
+                    "current_reason": "somereason",
+                    "current_status": "open",
+                    "current_tags": ["sometag1", "sometag2"],
+                    "log_id": None,
+                    "reason": "",
+                    "status": "",
+                    "tags": [],
+                },
+                "tree": "mozilla-central",
+            },
+            {
+                "id": 2,
+                "last_state": {
+                    "current_log_id": 2,
+                    "current_reason": "somereason",
+                    "current_status": "open",
+                    "current_tags": ["sometag1", "sometag2"],
+                    "log_id": None,
+                    "reason": "",
+                    "status": "",
+                    "tags": [],
+                },
+                "tree": "autoland",
+            },
+        ],
+        "when": "0001-01-01T00:30:00+00:00",
+        "who": "ad|Example-LDAP|testuser",
+    }
+]
 
 
 # TODO doesn't work
@@ -241,10 +280,11 @@ def treestatus_stack():
     )
 
     # TODO is the API endpoint correct here?
-    stack_response = api.request("GET", "treestatus/stack")
-    stack = stack_response.get("result")
-    if not stack:
-        # TODO how to render an error correctly?
-        return render_template("error")
+    # stack_response = api.request("GET", "treestatus/stack")
+    # stack = stack_response.get("result")
+    # if not stack:
+    #     # TODO how to render an error correctly?
+    #     return render_template("error")
 
-    return render_template("treestatus/stack.html")
+    # TODO make this work without fake data
+    return render_template("treestatus/stack.html", stack=fake_stack)
