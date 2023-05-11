@@ -104,6 +104,43 @@ fake_logs = [
 ]
 fake_stack = [
     {
+        "id": 2,
+        "reason": "hgmo is busted.",
+        "status": "closed",
+        "trees": [
+            {
+                "id": 1,
+                "last_state": {
+                    "current_log_id": 1,
+                    "current_reason": "somereason",
+                    "current_status": "open",
+                    "current_tags": ["sometag1", "sometag2"],
+                    "log_id": None,
+                    "reason": "",
+                    "status": "",
+                    "tags": [],
+                },
+                "tree": "mozilla-central",
+            },
+            {
+                "id": 2,
+                "last_state": {
+                    "current_log_id": 2,
+                    "current_reason": "somereason",
+                    "current_status": "open",
+                    "current_tags": ["sometag1", "sometag2"],
+                    "log_id": None,
+                    "reason": "",
+                    "status": "",
+                    "tags": [],
+                },
+                "tree": "autoland",
+            },
+        ],
+        "when": "0001-01-01T00:30:00+00:00",
+        "who": "ad|Example-LDAP|testuser",
+    },
+    {
         "id": 1,
         "reason": "somereason",
         "status": "open",
@@ -139,7 +176,7 @@ fake_stack = [
         ],
         "when": "0001-01-01T00:30:00+00:00",
         "who": "ad|Example-LDAP|testuser",
-    }
+    },
 ]
 
 
