@@ -23,6 +23,7 @@ from landoui.landoapi import (
     LandoAPI,
 )
 from landoui.forms import (
+    TreeStatusNewTreeForm,
     TreeStatusPopStackForm,
     TreeStatusUpdateForm,
 )
@@ -193,6 +194,7 @@ def treestatus():
     )
 
     treestatus_update_form = TreeStatusUpdateForm()
+    treestatus_new_tree_form = TreeStatusNewTreeForm()
 
     trees_response = api.request("GET", "treestatus/trees")
     trees = trees_response.get("result")
@@ -206,6 +208,7 @@ def treestatus():
         return render_template(
             "treestatus/trees.html",
             trees=fake_trees,
+            treestatus_new_tree_form=treestatus_new_tree_form,
             treestatus_update_form=treestatus_update_form,
         )
 
@@ -213,7 +216,35 @@ def treestatus():
     return render_template(
         "treestatus/trees.html",
         trees=trees,
+        treestatus_new_tree_form=treestatus_new_tree_form,
         treestatus_update_form=treestatus_update_form,
+    )
+
+
+@treestatus_blueprint.route("/treestatus/new_tree", methods=["POST"])
+def new_tree():
+    """Handler for the new tree form."""
+    api = LandoAPI(
+        current_app.config["LANDO_API_URL"],
+        auth0_access_token=session.get("access_token"),
+        phabricator_api_token=get_phabricator_api_token(),
+    )
+    treestatus_new_tree_form = TreeStatusNewTreeForm()
+
+    # TODO make this hit the API.
+    tree = treestatus_new_tree_form.tree.data
+    status = treestatus_new_tree_form.status.data
+    reason = treestatus_new_tree_form.reason.data
+    motd = treestatus_new_tree_form.message_of_the_day.data
+    return jsonify(
+        returned=[
+            {
+                "tree": tree,
+                "status": status,
+                "reason": reason,
+                "motd": motd,
+            }
+        ]
     )
 
 
