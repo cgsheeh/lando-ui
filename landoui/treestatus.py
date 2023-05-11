@@ -228,10 +228,6 @@ def update_treestatus():
 
     errors = []
 
-    if not treestatus_update_form.is_submitted():
-        # TODO fix this.
-        return jsonify(errors=[]), 401
-
     if not is_user_authenticated_TODO():
         # TODO fix this.
         return jsonify(errors=["Not authenticated."]), 401
