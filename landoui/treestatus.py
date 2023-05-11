@@ -123,7 +123,9 @@ def treestatus():
         # TODO this should load some error or an error should be added
         # to the trees view.
         # TODO don't use fake trees here
-        treestatus_update_form.trees.choices = [(tree, tree) for tree in fake_trees.keys()]
+        treestatus_update_form.trees.choices = [
+            (tree, tree) for tree in fake_trees.keys()
+        ]
         return render_template(
             "treestatus/trees.html",
             trees=fake_trees,
