@@ -30,6 +30,12 @@ from wtforms.validators import (
     optional,
 )
 
+TREESTATUS_CHOICES = [
+    ("open", "Open"),
+    ("closed", "Closed"),
+    ("approval required", "Approval Required"),
+]
+
 # from landoui.template_helpers import treestatus_to_status_badge_class
 
 
@@ -183,11 +189,7 @@ class TreeStatusUpdateForm(FlaskForm):
 
     status = SelectField(
         "Status",
-        choices=[
-            ("open", "Open"),
-            ("closed", "Closed"),
-            ("approval required", "Approval Required"),
-        ],
+        choices=TREESTATUS_CHOICES,
         validators=[InputRequired("A status is required.")],
     )
 
