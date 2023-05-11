@@ -209,6 +209,7 @@ def treestatus():
             treestatus_update_form=treestatus_update_form,
         )
 
+    treestatus_update_form.trees.choices = [(tree, tree) for tree in trees.keys()]
     return render_template(
         "treestatus/trees.html",
         trees=trees,
