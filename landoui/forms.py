@@ -198,7 +198,6 @@ class TreeStatusUpdateForm(FlaskForm):
     # TODO this is wrong.
     tags = SelectField("Tags")
 
-    # TODO default is probably wrong here.
     remember_this_change = BooleanField(
         "Remember",
         default=True,
