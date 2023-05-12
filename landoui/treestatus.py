@@ -282,12 +282,12 @@ def update_treestatus():
             "treestatus/trees",
             require_auth0=True,
             json={
-                "trees": [],
-                "status": "",
-                "reason": "",
-                "message_of_the_day": "",
-                "tags": [],
-                "remember": True,
+                "trees": trees,
+                "status": status,
+                "reason": reason,
+                "message_of_the_day": message_of_the_day,
+                "tags": tags,
+                "remember": remember,
             },
         )
     except LandoAPIError as exc:
@@ -332,7 +332,6 @@ def treestatus_stack_pop():
         auth0_access_token=session.get("access_token"),
         phabricator_api_token=token,
     )
-
     stack_pop_form = TreeStatusPopStackForm()
 
     if not is_user_authenticated_TODO():
