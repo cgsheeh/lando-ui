@@ -200,7 +200,9 @@ class TreeStatusUpdateForm(FlaskForm):
 
     # TODO default is probably wrong here.
     remember_this_change = BooleanField(
-        "Remember", default=True, validators=[InputRequired("A reason is required.")]
+        "Remember",
+        default=True,
+        validators=[InputRequired("The `remember` field is required.")],
     )
 
     message_of_the_day = StringField("Message of the day")
