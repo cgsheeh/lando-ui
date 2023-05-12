@@ -232,18 +232,36 @@ def new_tree():
     )
     treestatus_new_tree_form = TreeStatusNewTreeForm()
 
-    # TODO make this hit the API.
     tree = treestatus_new_tree_form.tree.data
     status = treestatus_new_tree_form.status.data
     reason = treestatus_new_tree_form.reason.data
-    motd = treestatus_new_tree_form.message_of_the_day.data
+    message_of_the_day = treestatus_new_tree_form.message_of_the_day.data
+    try:
+        response = api.request(
+            "PUT",
+            f"treestatus/trees/{tree}",
+            require_auth0=True,
+            json={
+                "tree": tree,
+                "status": status,
+                "reason": reason,
+                "message_of_the_day": message_of_the_day,
+            },
+        )
+    except LandoAPIError as exc:
+        if not exc.detail:
+            raise exc
+
+        return jsonify(errors=[exc.detail]), 500
+
+    # TODO what to return here? reirect to another page?
     return jsonify(
         returned=[
             {
                 "tree": tree,
                 "status": status,
                 "reason": reason,
-                "motd": motd,
+                "motd": message_of_the_day,
             }
         ]
     )
