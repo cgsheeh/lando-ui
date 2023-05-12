@@ -21,6 +21,7 @@ from landoui.helpers import (
 )
 from landoui.landoapi import (
     LandoAPI,
+    LandoAPIError,
 )
 from landoui.forms import (
     TreeStatusNewTreeForm,
