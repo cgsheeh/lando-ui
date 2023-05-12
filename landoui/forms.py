@@ -225,4 +225,4 @@ class TreeStatusNewTreeForm(FlaskForm):
 class TreeStatusPopStackForm(FlaskForm):
     """Clear an entry off the treestatus stack."""
 
-    clear = SubmitField("Clear")
+    revert = BooleanField("Revert", default=False)

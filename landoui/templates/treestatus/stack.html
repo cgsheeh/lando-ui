@@ -14,7 +14,8 @@
 
     <div class="StackPage-stack">
         <form action="{{ url_for("treestatus.treestatus_stack_pop") }}" method="post">
-            {{ stack_pop_form.clear() }}
+            <div>{{ stack_pop_form.revert.label() }}: {{ stack_pop_form.revert() }}</div>
+            <button class="button" title="Submit">Remove from stack</button>
         </form>
         <table class="table">
             <thead>

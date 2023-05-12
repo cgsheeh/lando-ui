@@ -357,7 +357,7 @@ def treestatus_stack_pop():
         return jsonify(errors=["Not authenticated."]), 401
 
     # TODO hook this up to the actual API
-    return jsonify(returned=[stack_pop_form.clear.data])
+    return jsonify(returned=[stack_pop_form.revert.data])
 
 
 # TODO doesn't work
