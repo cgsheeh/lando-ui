@@ -275,18 +275,7 @@ def update_treestatus():
     message_of_the_day = treestatus_update_form.message_of_the_day.data
     tags = treestatus_update_form.tags.data
     remember = treestatus_update_form.remember_this_change.data
-    return jsonify(
-        errors=[
-            {
-                "trees": trees,
-                "status": status,
-                "reason": reason,
-                "message_of_the_day": message_of_the_day,
-                "tags": tags,
-                "remember": remember,
-            }
-        ]
-    )
+
     try:
         response = api.request(
             "PATCH",
