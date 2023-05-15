@@ -232,10 +232,12 @@ def new_tree():
     )
     treestatus_new_tree_form = TreeStatusNewTreeForm()
 
+    # Retrieve data from the form.
     tree = treestatus_new_tree_form.tree.data
     status = treestatus_new_tree_form.status.data
     reason = treestatus_new_tree_form.reason.data
     message_of_the_day = treestatus_new_tree_form.message_of_the_day.data
+
     try:
         response = api.request(
             "PUT",
@@ -288,6 +290,7 @@ def update_treestatus():
     #         errors.extend(field_errors)
     #     return jsonify(errors=errors), 400
 
+    # Retrieve data from the form.
     trees = treestatus_update_form.trees.data
     status = treestatus_update_form.status.data
     reason = treestatus_update_form.reason.data
