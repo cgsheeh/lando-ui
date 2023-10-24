@@ -139,7 +139,7 @@ class UserSettingsForm(FlaskForm):
     reset_phab_api_token = BooleanField("Delete", default="")
 
 
-def tree_table_widget(field, trees: dict[str, dict], **kwargs):
+def tree_table_widget(field, trees: dict[str, dict], **kwargs) -> str:
     """Render a table with checkbox elements as a selection."""
     kwargs.setdefault("type", "checkbox")
     field_id = kwargs.pop("id", field.id)
