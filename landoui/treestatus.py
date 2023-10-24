@@ -26,7 +26,7 @@ from landoui.landoapi import (
 from landoui.forms import (
     TreeStatusNewTreeForm,
     TreeStatusPopStackForm,
-    TreeStatusUpdateForm,
+    TreeStatusSelectTreesForm,
 )
 
 treestatus_blueprint = Blueprint("treestatus", __name__)
@@ -194,7 +194,7 @@ def treestatus():
         phabricator_api_token=token,
     )
 
-    treestatus_update_form = TreeStatusUpdateForm()
+    treestatus_select_trees_form = TreeStatusSelectTreesForm()
     treestatus_new_tree_form = TreeStatusNewTreeForm()
 
     trees_response = api.request("GET", "treestatus/trees")
@@ -203,22 +203,22 @@ def treestatus():
         # TODO this should load some error or an error should be added
         # to the trees view.
         # TODO don't use fake trees here
-        treestatus_update_form.trees.choices = [
+        treestatus_select_trees_form.trees.choices = [
             (tree, tree) for tree in fake_trees.keys()
         ]
         return render_template(
             "treestatus/trees.html",
             trees=fake_trees,
             treestatus_new_tree_form=treestatus_new_tree_form,
-            treestatus_update_form=treestatus_update_form,
+            treestatus_select_trees_form=treestatus_select_trees_form,
         )
 
-    treestatus_update_form.trees.choices = [(tree, tree) for tree in trees.keys()]
+    treestatus_select_trees_form.trees.choices = [(tree, tree) for tree in trees.keys()]
     return render_template(
         "treestatus/trees.html",
         trees=trees,
         treestatus_new_tree_form=treestatus_new_tree_form,
-        treestatus_update_form=treestatus_update_form,
+        treestatus_select_trees_form=treestatus_select_trees_form,
     )
 
 
@@ -277,7 +277,7 @@ def update_treestatus():
         auth0_access_token=session.get("access_token"),
         phabricator_api_token=get_phabricator_api_token(),
     )
-    treestatus_update_form = TreeStatusUpdateForm()
+    treestatus_select_trees_form = TreeStatusSelectTreesForm()
 
     errors = []
 
@@ -285,18 +285,18 @@ def update_treestatus():
         # TODO fix this.
         return jsonify(errors=["Not authenticated."]), 401
 
-    # if not treestatus_update_form.validate():
-    #     for field_errors in treestatus_update_form.errors.values():
+    # if not treestatus_select_trees_form.validate():
+    #     for field_errors in treestatus_select_trees_form.errors.values():
     #         errors.extend(field_errors)
     #     return jsonify(errors=errors), 400
 
     # Retrieve data from the form.
-    trees = treestatus_update_form.trees.data
-    status = treestatus_update_form.status.data
-    reason = treestatus_update_form.reason.data
-    message_of_the_day = treestatus_update_form.message_of_the_day.data
-    tags = treestatus_update_form.tags.data
-    remember = treestatus_update_form.remember_this_change.data
+    trees = treestatus_select_trees_form.trees.data
+    status = treestatus_select_trees_form.status.data
+    reason = treestatus_select_trees_form.reason.data
+    message_of_the_day = treestatus_select_trees_form.message_of_the_day.data
+    tags = treestatus_select_trees_form.tags.data
+    remember = treestatus_select_trees_form.remember_this_change.data
 
     try:
         response = api.request(
