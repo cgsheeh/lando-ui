@@ -27,6 +27,7 @@ from landoui.forms import (
     TreeStatusNewTreeForm,
     TreeStatusPopStackForm,
     TreeStatusSelectTreesForm,
+    TreeStatusUpdateTreesForm,
 )
 
 treestatus_blueprint = Blueprint("treestatus", __name__)
@@ -270,6 +271,24 @@ def new_tree():
 
 
 @treestatus_blueprint.route("/treestatus/update", methods=["POST"])
+def update_treestatus_form():
+    """Web UI for the tree status updating form."""
+    treestatus_select_trees_form = TreeStatusSelectTreesForm()
+    treestatus_update_trees_form = TreeStatusUpdateTreesForm()
+
+    # Retrieve data from the selection form.
+    trees = treestatus_select_trees_form.trees.data
+
+    # Set the update trees form's trees to the selected values.
+    treestatus_update_trees_form.trees.choices = [(tree, tree) for tree in trees]
+
+    return render_template(
+        "treestatus/update_trees.html",
+        treestatus_update_trees_form=treestatus_update_trees_form,
+    )
+
+
+@treestatus_blueprint.route("/treestatus/update_handler", methods=["POST"])
 def update_treestatus():
     """Handler for the tree status updating form."""
     api = LandoAPI(
