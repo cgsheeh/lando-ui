@@ -196,7 +196,6 @@ def treestatus():
     )
 
     treestatus_select_trees_form = TreeStatusSelectTreesForm()
-    treestatus_new_tree_form = TreeStatusNewTreeForm()
 
     trees_response = api.request("GET", "treestatus/trees")
     trees = trees_response.get("result")
@@ -210,7 +209,6 @@ def treestatus():
         return render_template(
             "treestatus/trees.html",
             trees=fake_trees,
-            treestatus_new_tree_form=treestatus_new_tree_form,
             treestatus_select_trees_form=treestatus_select_trees_form,
         )
 
@@ -218,7 +216,6 @@ def treestatus():
     return render_template(
         "treestatus/trees.html",
         trees=trees,
-        treestatus_new_tree_form=treestatus_new_tree_form,
         treestatus_select_trees_form=treestatus_select_trees_form,
     )
 
