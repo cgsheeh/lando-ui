@@ -13,75 +13,38 @@
     <h1>Treestatus</h1>
     <p>Current status of Mozilla's version-control repositories.</p>
 
+    {% include "treestatus/recent_changes.html" %}
+
+    {# TODO the formatting on this h2 is small/wrong etc. #}
     <h2>Trees<h2>
     <div class="StackPage-stack">
         {#
             The main Treestatus page is a table that presents the trees.
-            If the user is authenticated and has proper scopes, also make
-            the page a form which is used to select trees and forward the
-            selection to the tree status updating form.
+            Trees can be selected here for updating, or for deletion.
         #}
-        {#
-            TODO look at how the landing page loads it's modal and make buttons
-            that present the user with different modals containing the add/update/delete
-            tree forms
-        #}
-      <div class="Treestatus-modal modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">Update tree status</p>
-            <button class="StackPage-landingPreview-close delete" aria-label="close"></button>
-          </header>
-          <section class="modal-card-body">
-            <form class="Treestatus-form" action="{{ url_for('treestatus.update_treestatus') }}" method="post" >
-            {{ treestatus_update_form.csrf_token }}
-            <div>{{ treestatus_update_form.status.label }}: {{ treestatus_update_form.status() }}</div>
-            <div>{{ treestatus_update_form.reason.label }}: {{ treestatus_update_form.reason() }}</div>
-            <div>{{ treestatus_update_form.message_of_the_day.label }}: {{ treestatus_update_form.message_of_the_day() }}</div>
-            <div>{{ treestatus_update_form.remember_this_change.label }}: {{ treestatus_update_form.remember_this_change() }}</div>
-            {# TODO add tags input #}
-          </section>
-          <footer class="modal-card-foot">
-            <button class="button" title="Submit" method="post">Change tree status</button>
-              <button class="StackPage-landingPreview-close button">Cancel</button>
-          </footer>
-            </form>
-        </div>
-      </div>
-        <form action="{{ url_for("treestatus.new_tree") }}" method="post">
-            {{ treestatus_new_tree_form.hidden_tag() }}
-            <div>{{ treestatus_new_tree_form.tree.label }}: {{ treestatus_new_tree_form.tree() }}</div>
-            <div>{{ treestatus_new_tree_form.status.label }}: {{ treestatus_new_tree_form.status() }}</div>
-            <div>{{ treestatus_new_tree_form.reason.label }}: {{ treestatus_new_tree_form.reason() }}</div>
-            <div>{{ treestatus_new_tree_form.message_of_the_day.label }}: {{ treestatus_new_tree_form.message_of_the_day() }}</div>
-            <button class="button" title="Submit">Add new tree</button>
+        <form action="{{ url_for("treestatus.update_treestatus_form") }}" method="post">
+            <div>
+                <button class="Treestatus-updateTreeButton button" title="Update Tree">Update trees</button>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        {% if is_user_authenticated_TODO() %}
+                        <th></th>
+                        {% endif %}
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Reason</th>
+                        <th>Tags</th>
+                        <th>Message of the Day</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {# TODO how to make the tree selection pass to the modal form? #}
+                    {{ treestatus_select_trees_form.trees(trees=trees)|safe }}
+                </tbody>
+            </table>
         </form>
-        <div>
-            <button class="Treestatus-updateTreeButton button" title="Update Tree">Update trees</button>
-        </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    {% if is_user_authenticated_TODO() %}
-                    <th></th>
-                    {% endif %}
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th>Reason</th>
-                    <th>Tags</th>
-                    <th>Message of the Day</th>
-                </tr>
-            </thead>
-            <tbody>
-                {# TODO how to make the tree selection pass to the modal form? #}
-                {{ treestatus_update_form.trees(trees=trees)|safe }}
-            </tbody>
-        </table>
-
-        {% if is_user_authenticated_TODO() %}
-        </form>
-        {% endif %}
     </div>
 </main>
 {% endblock %}
