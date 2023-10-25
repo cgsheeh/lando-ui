@@ -1,0 +1,36 @@
+{#
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#}
+
+{# Only render the recent changes header if there are any changes available. #}
+{% if stack %}
+<h1>Recent changes</h1>
+<div class="StackPage-stack">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Status</th>
+                <th>Reason</th>
+                <th>Trees</th>
+                <th>When</th>
+                <th>Who</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for status_change in stack %}
+                <tr>
+                    <td>{{ status_change.id }}</td>
+                    <td>{{ status_change.status }}</td>
+                    <td>{{ status_change.reason }}</td>
+                    <td>{{ status_change.trees | map(attribute="tree") | join(",") }}</td>
+                    <td>{{ status_change.when }}</td>
+                    <td>{{ status_change.who }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
