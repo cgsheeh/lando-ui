@@ -293,7 +293,7 @@ def update_treestatus():
         auth0_access_token=session.get("access_token"),
         phabricator_api_token=get_phabricator_api_token(),
     )
-    treestatus_select_trees_form = TreeStatusSelectTreesForm()
+    treestatus_update_trees_form = TreeStatusUpdateTreesForm()
 
     errors = []
 
@@ -307,12 +307,21 @@ def update_treestatus():
     #     return jsonify(errors=errors), 400
 
     # Retrieve data from the form.
-    trees = treestatus_select_trees_form.trees.data
-    status = treestatus_select_trees_form.status.data
-    reason = treestatus_select_trees_form.reason.data
-    message_of_the_day = treestatus_select_trees_form.message_of_the_day.data
-    tags = treestatus_select_trees_form.tags.data
-    remember = treestatus_select_trees_form.remember_this_change.data
+    trees = treestatus_update_trees_form.trees.data
+    status = treestatus_update_trees_form.status.data
+    reason = treestatus_update_trees_form.reason.data
+    message_of_the_day = treestatus_update_trees_form.message_of_the_day.data
+    tags = treestatus_update_trees_form.tags.data
+    remember = treestatus_update_trees_form.remember_this_change.data
+
+    return {
+        "trees": treestatus_update_trees_form.trees.data,
+        "status": treestatus_update_trees_form.status.data,
+        "reason": treestatus_update_trees_form.reason.data,
+        "message_of_the_day": treestatus_update_trees_form.message_of_the_day.data,
+        "tags": treestatus_update_trees_form.tags.data,
+        "remember": treestatus_update_trees_form.remember_this_change.data,
+    }, 200
 
     try:
         response = api.request(
