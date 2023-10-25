@@ -1,0 +1,32 @@
+{#
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at https://mozilla.org/MPL/2.0/.
+#}
+
+{% extends "partials/layout.html" %}
+{% block page_title %}Treestatus{% endblock %}
+
+{% block main %}
+<!-- TODO should this page use the same classes as a stack? -->
+<main class="Treestatus container fullhd">
+    <h1>Treestatus: Update trees</h1>
+
+    {% include "treestatus/recent_changes.html" %}
+
+    <form action="{{ url_for("treestatus.update_treestatus") }}" method="post">
+        <div>You are about to update the following trees:</div>
+        <ul>
+            {% for tree in treestatus_update_trees_form.trees %}
+            <li>{{ tree }}</li>
+            {% endfor %}
+        </ul>
+        <div>Status</div>
+        <div>Reason category</div>
+        <div>Reason (required to close)</div>
+        <div>Remember change</div>
+        <div>Message of the day</div>
+    </form>
+
+</main>
+{% endblock %}
