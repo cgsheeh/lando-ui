@@ -10,6 +10,8 @@
 {% block main %}
 <!-- TODO should this page use the same classes as a stack? -->
 <main class="StackPage container fullhd">
+    {% include "treestatus/recent_changes.html" %}
+
     <h1>Treestatus: {{ tree }}</h1>
     <p>Current status of {{ tree }}.</p>
 
