@@ -201,8 +201,13 @@ def treestatus():
     # trees = trees_response.get("result")
     trees = fake_trees
     treestatus_select_trees_form.trees.choices = [(tree, tree) for tree in trees.keys()]
+
+    recent_changes_stack = fake_stack
+    # recent_changes_stack = None
+
     return render_template(
         "treestatus/trees.html",
+        recent_changes_stack=recent_changes_stack,
         trees=trees,
         treestatus_select_trees_form=treestatus_select_trees_form,
     )
@@ -261,8 +266,13 @@ def new_tree():
     """View for the new tree form."""
     treestatus_new_tree_form = TreeStatusNewTreeForm()
 
+    recent_changes_stack = fake_stack
+    # recent_changes_stack = None
+
     return render_template(
-        "treestatus/new_tree.html", treestatus_new_tree_form=treestatus_new_tree_form
+        "treestatus/new_tree.html",
+        treestatus_new_tree_form=treestatus_new_tree_form,
+        recent_changes_stack=recent_changes_stack,
     )
 
 
@@ -280,8 +290,12 @@ def update_treestatus_form():
     for tree in trees:
         treestatus_update_trees_form.trees.append_entry(tree)
 
+    recent_changes_stack = fake_stack
+    # recent_changes_stack = None
+
     return render_template(
         "treestatus/update_trees.html",
+        recent_changes_stack=recent_changes_stack,
         treestatus_update_trees_form=treestatus_update_trees_form,
     )
 
@@ -366,6 +380,14 @@ def treestatus_tree(tree: str):
     # if not logs:
     #     return render_template("error")
 
+    recent_changes_stack = fake_stack
+    # recent_changes_stack = None
+
     # TODO use real logs.
     # return render_template("treestatus/log.html", logs=logs)
-    return render_template("treestatus/log.html", logs=fake_logs, tree=tree)
+    return render_template(
+        "treestatus/log.html",
+        logs=fake_logs,
+        recent_changes_stack=recent_changes_stack,
+        tree=tree,
+    )
