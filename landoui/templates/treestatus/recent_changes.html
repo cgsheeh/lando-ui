@@ -5,27 +5,31 @@
 #}
 
 {# Only render the recent changes header if there are any changes available. #}
-{% if stack %}
+{% if recent_changes_stack %}
 <h1>Recent changes</h1>
 <div class="StackPage-stack">
     <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Status</th>
+                <th>Status changes</th>
                 <th>Reason</th>
-                <th>Trees</th>
                 <th>When</th>
                 <th>Who</th>
             </tr>
         </thead>
         <tbody>
-            {% for status_change in stack %}
+            {% for status_change in recent_changes_stack %}
                 <tr>
                     <td>{{ status_change.id }}</td>
-                    <td>{{ status_change.status }}</td>
+                    <td>
+                        <ul>
+                            {% for tree in status_change.trees %}
+                            <li>{{ tree.tree }} from {{ tree.last_state.status }} to {{ tree.last_state.current_status }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
                     <td>{{ status_change.reason }}</td>
-                    <td>{{ status_change.trees | map(attribute="tree") | join(",") }}</td>
                     <td>{{ status_change.when }}</td>
                     <td>{{ status_change.who }}</td>
                 </tr>
@@ -33,4 +37,5 @@
         </tbody>
     </table>
 </div>
+</br>
 {% endif %}
