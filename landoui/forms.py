@@ -213,7 +213,6 @@ class TreeStatusUpdateTreesForm(FlaskForm):
     remember_this_change = BooleanField(
         "Remember",
         default=True,
-        validators=[InputRequired("The `remember` field is required.")],
     )
 
     message_of_the_day = StringField("Message of the day")
