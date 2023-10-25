@@ -197,21 +197,9 @@ def treestatus():
 
     treestatus_select_trees_form = TreeStatusSelectTreesForm()
 
-    trees_response = api.request("GET", "treestatus/trees")
-    trees = trees_response.get("result")
-    if not trees:
-        # TODO this should load some error or an error should be added
-        # to the trees view.
-        # TODO don't use fake trees here
-        treestatus_select_trees_form.trees.choices = [
-            (tree, tree) for tree in fake_trees.keys()
-        ]
-        return render_template(
-            "treestatus/trees.html",
-            trees=fake_trees,
-            treestatus_select_trees_form=treestatus_select_trees_form,
-        )
-
+    # trees_response = api.request("GET", "treestatus/trees")
+    # trees = trees_response.get("result")
+    trees = fake_trees
     treestatus_select_trees_form.trees.choices = [(tree, tree) for tree in trees.keys()]
     return render_template(
         "treestatus/trees.html",
