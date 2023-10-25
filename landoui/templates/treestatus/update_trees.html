@@ -10,10 +10,10 @@
 {% block main %}
 <!-- TODO should this page use the same classes as a stack? -->
 <main class="Treestatus container fullhd">
-    <h1>Treestatus: Update trees</h1>
 
     {% include "treestatus/recent_changes.html" %}
 
+    <h1>Treestatus: Update trees</h1>
     <form action="{{ url_for("treestatus.update_treestatus") }}" method="post">
         {{ treestatus_update_trees_form.csrf_token }}
         <div>You are about to update the following trees:</div>
