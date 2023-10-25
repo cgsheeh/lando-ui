@@ -271,13 +271,15 @@ def new_tree():
 def update_treestatus_form():
     """Web UI for the tree status updating form."""
     treestatus_select_trees_form = TreeStatusSelectTreesForm()
-    treestatus_update_trees_form = TreeStatusUpdateTreesForm()
 
-    # Retrieve data from the selection form.
+    # Retrieve trees from the selection form.
     trees = treestatus_select_trees_form.trees.data
 
-    # Set the update trees form's trees to the selected values.
-    treestatus_update_trees_form.trees.choices = [(tree, tree) for tree in trees]
+    treestatus_update_trees_form = TreeStatusUpdateTreesForm()
+
+    # Add each input from the selection form to the update form.
+    for tree in trees:
+        treestatus_update_trees_form.trees.append_entry(tree)
 
     return render_template(
         "treestatus/update_trees.html",

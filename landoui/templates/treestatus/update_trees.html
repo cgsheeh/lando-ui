@@ -19,7 +19,7 @@
         <div>You are about to update the following trees:</div>
         <ul>
             {% for tree in treestatus_update_trees_form.trees %}
-            <li>{{ tree }}</li>
+            <li>{{ tree.data }} {{ tree }}</li>
             {% endfor %}
         </ul>
         <div>{{ treestatus_update_trees_form.status.label }}: {{ treestatus_update_trees_form.status() }}</div>

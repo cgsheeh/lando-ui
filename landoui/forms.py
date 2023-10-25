@@ -191,8 +191,12 @@ class TreeStatusSelectTreesForm(FlaskForm):
 class TreeStatusUpdateTreesForm(FlaskForm):
     """Form used to update the state of a selection of trees."""
 
-    trees = SelectMultipleField(
-        "Trees", validators=[InputRequired("A selection of trees is required.")]
+    trees = FieldList(
+        StringField(
+            "Trees",
+            validators=[InputRequired("A selection of trees is required.")],
+            widget=widgets.HiddenInput(),
+        )
     )
 
     status = SelectField(
