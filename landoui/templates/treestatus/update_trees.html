@@ -15,17 +15,21 @@
     {% include "treestatus/recent_changes.html" %}
 
     <form action="{{ url_for("treestatus.update_treestatus") }}" method="post">
+        {{ treestatus_update_trees_form.csrf_token }}
         <div>You are about to update the following trees:</div>
         <ul>
             {% for tree in treestatus_update_trees_form.trees %}
             <li>{{ tree }}</li>
             {% endfor %}
         </ul>
-        <div>Status</div>
+        <div>{{ treestatus_update_trees_form.status.label }}: {{ treestatus_update_trees_form.status() }}</div>
+        <div>{{ treestatus_update_trees_form.reason.label }}: {{ treestatus_update_trees_form.reason() }}</div>
+        <div>{{ treestatus_update_trees_form.remember_this_change.label }}: {{ treestatus_update_trees_form.remember_this_change() }}</div>
+        <div>{{ treestatus_update_trees_form.message_of_the_day.label }}: {{ treestatus_update_trees_form.message_of_the_day() }}</div>
         <div>Reason category</div>
-        <div>Reason (required to close)</div>
-        <div>Remember change</div>
-        <div>Message of the day</div>
+        <div>
+            <button class="Treestatus-updateTreeButton button" title="Update Tree">Update trees</button>
+        </div>
     </form>
 
 </main>
