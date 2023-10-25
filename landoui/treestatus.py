@@ -220,8 +220,8 @@ def treestatus():
     )
 
 
-@treestatus_blueprint.route("/treestatus/new_tree", methods=["POST"])
-def new_tree():
+@treestatus_blueprint.route("/treestatus/new_tree/", methods=["POST"])
+def new_tree_handler():
     """Handler for the new tree form."""
     api = LandoAPI(
         current_app.config["LANDO_API_URL"],
@@ -232,10 +232,10 @@ def new_tree():
 
     # Retrieve data from the form.
     tree = treestatus_new_tree_form.tree.data
-    status = treestatus_new_tree_form.status.data
-    reason = treestatus_new_tree_form.reason.data
-    message_of_the_day = treestatus_new_tree_form.message_of_the_day.data
 
+    return {"tree": tree}, 200
+
+    # TODO test this actually works with the API.
     try:
         response = api.request(
             "PUT",
@@ -243,9 +243,10 @@ def new_tree():
             require_auth0=True,
             json={
                 "tree": tree,
-                "status": status,
-                "reason": reason,
-                "message_of_the_day": message_of_the_day,
+                # Trees are open on creation.
+                "status": "open",
+                "reason": "",
+                "message_of_the_day": "",
             },
         )
     except LandoAPIError as exc:
@@ -264,6 +265,16 @@ def new_tree():
                 "motd": message_of_the_day,
             }
         ]
+    )
+
+
+@treestatus_blueprint.route("/treestatus/new_tree/", methods=["GET"])
+def new_tree():
+    """View for the new tree form."""
+    treestatus_new_tree_form = TreeStatusNewTreeForm()
+
+    return render_template(
+        "treestatus/new_tree.html", treestatus_new_tree_form=treestatus_new_tree_form
     )
 
 

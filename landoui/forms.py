@@ -223,15 +223,6 @@ class TreeStatusNewTreeForm(FlaskForm):
 
     tree = StringField("Tree", validators=[InputRequired("A tree name is required.")])
 
-    status = SelectField(
-        "Status",
-        choices=TREESTATUS_CHOICES,
-    )
-
-    reason = StringField("Reason", default="")
-
-    message_of_the_day = StringField("Message of the day", default="")
-
 
 class TreeStatusPopStackForm(FlaskForm):
     """Clear an entry off the treestatus stack."""
