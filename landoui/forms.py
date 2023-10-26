@@ -155,6 +155,7 @@ def tree_table_widget(field, trees: dict[str, dict], **kwargs) -> str:
             "<tr>"
             f"<td><input {checkbox_options} /></td>"
             f'<td><a href="{value}">{value}</a></td>'
+            # TODO resolve this dependency loop
             # f'<td><span class="{treestatus_to_status_badge_class(tree["status"])}">{tree["status"]}</span></td>'
             f'<td><span class="{tree["status"]}">{tree["status"]}</span></td>'
             f"<td>{tree['reason']}</td>"
