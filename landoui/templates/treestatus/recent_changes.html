@@ -25,7 +25,14 @@
                     <td>
                         <ul>
                             {% for tree in status_change.trees %}
-                            <li>{{ tree.tree }} from {{ tree.last_state.status }} to {{ tree.last_state.current_status }}</li>
+                            <li>{{ tree.tree }} from 
+                                <span class="{{ tree.last_state.status | treestatus_to_status_badge_class }}">
+                                    {{ tree.last_state.status }}
+                                </span> to 
+                                <span class="{{ tree.last_state.current_status| treestatus_to_status_badge_class }}">
+                                    {{ tree.last_state.current_status }}
+                                </span>
+                            </li>
                             {% endfor %}
                         </ul>
                     </td>
