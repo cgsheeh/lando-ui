@@ -15,6 +15,7 @@ from wtforms import (
     Field,
     FieldList,
     HiddenField,
+    IntegerField,
     SelectField,
     SelectMultipleField,
     StringField,
@@ -225,7 +226,17 @@ class TreeStatusNewTreeForm(FlaskForm):
     tree = StringField("Tree", validators=[InputRequired("A tree name is required.")])
 
 
-class TreeStatusPopStackForm(FlaskForm):
-    """Clear an entry off the treestatus stack."""
+class TreeStatusRecentChangesForm(FlaskForm):
+    """Modify a recent status change."""
 
-    revert = BooleanField("Revert", default=False)
+    id = IntegerField("Id", validators=[InputRequired("An ID is required.")])
+
+    reason = StringField("Reason")
+
+    reason_category = StringField("Reason Category")
+
+    restore = SubmitField("Restore")
+
+    update = SubmitField("Update")
+
+    discard = SubmitField("Discard")
