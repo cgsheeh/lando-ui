@@ -20,13 +20,13 @@
             </tr>
         </thead>
         <tbody>
-            {% for status_change in recent_changes_stack %}
+            {% for status_change_form, status_change_data in recent_changes_stack %}
             <tr>
-                <form action="{{ url_for("treestatus.patch_stack", id=status_change.id) }}" method="patch">
-                    <td>{{ status_change.id }}</td>
+                <form action="{{ url_for("treestatus.patch_stack", id=status_change_data.id) }}" method="patch">
+                    <td>{{ status_change_data.id }}</td>
                     <td>
                         <ul>
-                            {% for tree in status_change.trees %}
+                            {% for tree in status_change_data.trees %}
                             <li>{{ tree.tree }}
                                  from <span class="{{ tree.last_state.status | treestatus_to_status_badge_class }}">
                                     {{ tree.last_state.status }}
@@ -38,13 +38,13 @@
                             {% endfor %}
                         </ul>
                     </td>
-                    <td>{{ status_change.reason }}</td>
-                    <td>{{ status_change.when }}</td>
-                    <td>{{ status_change.who }}</td>
+                    <td>{{ status_change_form.reason.data }}</td>
+                    <td>{{ status_change_data.when }}</td>
+                    <td>{{ status_change_data.who }}</td>
                     <td>
-                        <button>Restore</button>
-                        <button>Update</button>
-                        <button>Discard</button>
+                        {{ status_change_form.restore() }}
+                        {{ status_change_form.update() }}
+                        {{ status_change_form.discard() }}
                     </td>
                 </form>
             </tr>

@@ -25,7 +25,7 @@ from landoui.landoapi import (
 )
 from landoui.forms import (
     TreeStatusNewTreeForm,
-    TreeStatusPopStackForm,
+    TreeStatusRecentChangesForm,
     TreeStatusSelectTreesForm,
     TreeStatusUpdateTreesForm,
 )
@@ -183,6 +183,23 @@ fake_stack = [
     },
 ]
 
+def build_recent_changes_stack() -> list[tuple[list[TreeStatusRecentChangesForm], dict]]:
+    """Build the recent changes stack object."""
+    return [
+        (
+            TreeStatusRecentChangesForm(
+                id=change["id"],
+                reason=change["reason"],
+                # reason_category=change["tags"],
+                who=change["who"],
+                when=change["when"],
+            ),
+            change,
+        )
+        for change in fake_stack
+    ]
+
+
 
 # TODO doesn't work
 @treestatus_blueprint.route("/treestatus/", methods=["GET"])
@@ -202,8 +219,7 @@ def treestatus():
     trees = fake_trees
     treestatus_select_trees_form.trees.choices = [(tree, tree) for tree in trees.keys()]
 
-    recent_changes_stack = fake_stack
-    # recent_changes_stack = None
+    recent_changes_stack = build_recent_changes_stack()
 
     return render_template(
         "treestatus/trees.html",
@@ -266,8 +282,7 @@ def new_tree():
     """View for the new tree form."""
     treestatus_new_tree_form = TreeStatusNewTreeForm()
 
-    recent_changes_stack = fake_stack
-    # recent_changes_stack = None
+    recent_changes_stack = build_recent_changes_stack()
 
     return render_template(
         "treestatus/new_tree.html",
@@ -290,8 +305,7 @@ def update_treestatus_form():
     for tree in trees:
         treestatus_update_trees_form.trees.append_entry(tree)
 
-    recent_changes_stack = fake_stack
-    # recent_changes_stack = None
+    recent_changes_stack = build_recent_changes_stack()
 
     return render_template(
         "treestatus/update_trees.html",
@@ -380,8 +394,7 @@ def treestatus_tree(tree: str):
     # if not logs:
     #     return render_template("error")
 
-    recent_changes_stack = fake_stack
-    # recent_changes_stack = None
+    recent_changes_stack = build_recent_changes_stack()
 
     # TODO use real logs.
     # return render_template("treestatus/log.html", logs=logs)
@@ -391,3 +404,9 @@ def treestatus_tree(tree: str):
         recent_changes_stack=recent_changes_stack,
         tree=tree,
     )
+
+
+@treestatus_blueprint.route("/treestatus/stack/<int:id>", methods=["PATCH"])
+def patch_stack(id: int):
+    """Handler for stack updates."""
+    return jsonify({"id": id}), 200
