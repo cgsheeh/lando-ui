@@ -183,7 +183,7 @@ fake_stack = [
     },
 ]
 
-def build_recent_changes_stack() -> list[tuple[list[TreeStatusRecentChangesForm], dict]]:
+def build_recent_changes_stack() -> list[tuple[TreeStatusRecentChangesForm, dict]]:
     """Build the recent changes stack object."""
     return [
         (
