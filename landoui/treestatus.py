@@ -183,6 +183,7 @@ fake_stack = [
     },
 ]
 
+
 def build_recent_changes_stack() -> list[tuple[TreeStatusRecentChangesForm, dict]]:
     """Build the recent changes stack object."""
     return [
@@ -198,7 +199,6 @@ def build_recent_changes_stack() -> list[tuple[TreeStatusRecentChangesForm, dict
         )
         for change in fake_stack
     ]
-
 
 
 # TODO doesn't work
