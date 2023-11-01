@@ -17,12 +17,13 @@
                 <th>When</th>
                 <th>Who</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             {% for status_change_form, status_change_data in recent_changes_stack %}
             <tr>
-                <form action="{{ url_for("treestatus.patch_stack", id=status_change_data.id) }}" method="patch">
+                <form class="recent-changes-form" action="{{ url_for("treestatus.patch_stack", id=status_change_data.id) }}" method="patch">
                     <td>{{ status_change_data.id }}</td>
                     <td>
                         <ul>
@@ -38,9 +39,10 @@
                             {% endfor %}
                         </ul>
                     </td>
-                    <td>{{ status_change_form.reason.data }}</td>
+                    <td>{{ status_change_form.reason() }}</td>
                     <td>{{ status_change_data.when }}</td>
                     <td>{{ status_change_data.who }}</td>
+                    <td><button class="recent-changes-edit" type="button" onclick="makeChangeEditable()">Edit</button></td>
                     <td>
                         {{ status_change_form.restore() }}
                         {{ status_change_form.update() }}

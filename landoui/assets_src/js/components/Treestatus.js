@@ -9,5 +9,11 @@
 $.fn.treestatus = function() {
     return this.each(function() {
         let $treestatus = $(this);
+
+        // Get each "recent change" form.
+        let $recent_changes = $treestatus.find(".recent-changes-form");
+
+        // Set the "edit button" to toggle disabled on each text input in the form.
+        
     });
 };
