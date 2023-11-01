@@ -23,7 +23,7 @@
         <tbody>
             {% for status_change_form, status_change_data in recent_changes_stack %}
             <tr>
-                <form class="recent-changes-form" action="{{ url_for("treestatus.patch_stack", id=status_change_data.id) }}" method="patch">
+                <form class="recent-changes-form" action="{{ url_for("treestatus.update_change", id=status_change_data.id) }}" method="post">
                     <td>{{ status_change_data.id }}</td>
                     <td>
                         <ul>

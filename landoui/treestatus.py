@@ -406,7 +406,16 @@ def treestatus_tree(tree: str):
     )
 
 
-@treestatus_blueprint.route("/treestatus/stack/<int:id>", methods=["PATCH"])
-def patch_stack(id: int):
+@treestatus_blueprint.route("/treestatus/stack/<int:id>", methods=["POST"])
+def update_change(id: int):
     """Handler for stack updates."""
-    return jsonify({"id": id}), 200
+    recent_changes_form = TreeStatusRecentChangesForm()
+
+    reason = recent_changes_form.reason.data
+
+    return jsonify(
+        {
+            "id": id,
+            "reason": reason,
+        }
+    ), 200
