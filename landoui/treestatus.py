@@ -331,11 +331,6 @@ def update_treestatus():
         # TODO fix this.
         return jsonify(errors=["Not authenticated."]), 401
 
-    # if not treestatus_select_trees_form.validate():
-    #     for field_errors in treestatus_select_trees_form.errors.values():
-    #         errors.extend(field_errors)
-    #     return jsonify(errors=errors), 400
-
     # Retrieve data from the form.
     trees = treestatus_update_trees_form.trees.data
     status = treestatus_update_trees_form.status.data
