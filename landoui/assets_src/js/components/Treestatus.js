@@ -23,5 +23,9 @@ $.fn.treestatus = function() {
             targetInput.prop('disabled', !isDisabled);
         });
 
+        // Toggle selected on all trees.
+        $('.select-all-trees').on("click", function () {
+            $('.tree-select-checkbox').prop('checked', true);
+        });
     });
 };

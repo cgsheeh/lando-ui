@@ -171,7 +171,13 @@ def tree_table_widget(field, trees: dict[str, dict], **kwargs) -> str:
     for value, label, checked in field.iter_choices():
         tree = trees[value]
 
-        options = dict(kwargs, name=field.name, value=value, id=field_id)
+        options = dict(
+            kwargs,
+            class_="tree-select-checkbox",
+            name=field.name,
+            value=value,
+            id=field_id,
+        )
         checkbox_options = widgets.html_params(**options)
         row = (
             "<tr>"
