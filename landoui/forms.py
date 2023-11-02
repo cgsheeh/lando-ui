@@ -259,8 +259,7 @@ class TreeStatusNewTreeForm(FlaskForm):
 class TreeStatusRecentChangesForm(FlaskForm):
     """Modify a recent status change."""
 
-    # TODO make this a hidden field, the ID number is irrelevant.
-    id = IntegerField("Id", validators=[InputRequired("An ID is required.")])
+    id = HiddenField("Id", validators=[InputRequired("An ID is required.")])
 
     reason = StringField("Reason")
 
