@@ -407,6 +407,11 @@ def treestatus_tree(tree: str):
 @treestatus_blueprint.route("/treestatus/stack/<int:id>", methods=["POST"])
 def update_change(id: int):
     """Handler for stack updates."""
+    api = LandoAPI(
+        current_app.config["LANDO_API_URL"],
+        auth0_access_token=session.get("access_token"),
+        phabricator_api_token=get_phabricator_api_token(),
+    )
     recent_changes_form = TreeStatusRecentChangesForm()
 
     reason = recent_changes_form.reason.data
@@ -416,17 +421,41 @@ def update_change(id: int):
     update = recent_changes_form.update.data
     discard = recent_changes_form.discard.data
 
+    if restore:
+        # Restore is a DELETE with a status revert.
+        method = "DELETE"
+        request_args = {"params": {"revert": 1}}
+    elif discard:
+        # Discard is a DELETE without a status revert.
+        method = "DELETE"
+        request_args = {"params": {"revert": 0}}
+    elif update:
+        # Update is a PATCH with any changed attributes passed in the body.
+        method = "PATCH"
+        json_body = {}
 
-    return (
-        jsonify(
-            {
-                "id": id,
-                "reason": reason,
-                "reason_category": reason_category,
-                "restore": restore,
-                "discard": discard,
-                "update": update,
-            }
-        ),
-        200,
-    )
+        if reason:
+            json_body["reason"] = reason
+
+        if reason_category:
+            json_body["tags"] = [reason_category]
+
+        request_args = {"json": json_body}
+    else:
+        raise Exception("TODO")
+
+    try:
+        response = api.request(
+            method,
+            f"treestatus/stack/{id}",
+            # TODO re-enable auth0 requirement.
+            # require_auth0=True,
+            **request_args,
+        )
+    except LandoAPIError as exc:
+        if not exc.detail:
+            raise exc
+
+        return jsonify(errors=[exc.detail]), 500
+
+    return redirect("../../treestatus")
