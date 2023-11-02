@@ -50,9 +50,9 @@
                     <td>{{ status_change_data.when }}</td>
                     <td>{{ status_change_data.who }}</td>
                     <td>
-                        {{ status_change_form.restore() }}
-                        {{ status_change_form.update() }}
-                        {{ status_change_form.discard() }}
+                        {{ status_change_form.restore(class_="button is-success is-small") }}
+                        {{ status_change_form.update(class_="button is-info is-small") }}
+                        {{ status_change_form.discard(class_="button is-danger is-small") }}
                     </td>
                 </form>
             </tr>
