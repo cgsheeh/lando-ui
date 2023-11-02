@@ -185,7 +185,9 @@ fake_stack = [
 ]
 
 
-def build_recent_changes_stack(api: LandoAPI) -> list[tuple[TreeStatusRecentChangesForm, dict]]:
+def build_recent_changes_stack(
+    api: LandoAPI,
+) -> list[tuple[TreeStatusRecentChangesForm, dict]]:
     """Build the recent changes stack object."""
     try:
         response = api.request(
