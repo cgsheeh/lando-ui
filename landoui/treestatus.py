@@ -264,10 +264,8 @@ def new_tree_handler():
 
         return jsonify(errors=[exc.detail]), 500
 
-    # TODO what to return here? reirect to another page?
-    return jsonify(
-        response=response,
-    )
+    # TODO Should we show some success message on this page?
+    return redirect("../../treestatus")
 
 
 @treestatus_blueprint.route("/treestatus/new_tree/", methods=["GET"])
