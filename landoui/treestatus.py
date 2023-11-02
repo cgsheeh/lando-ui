@@ -232,7 +232,7 @@ def treestatus():
     # trees = fake_trees
     treestatus_select_trees_form.trees.choices = [(tree, tree) for tree in trees.keys()]
 
-    recent_changes_stack = build_recent_changes_stack()
+    recent_changes_stack = build_recent_changes_stack(api)
 
     return render_template(
         "treestatus/trees.html",
