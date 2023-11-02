@@ -23,10 +23,10 @@
             {% endfor %}
         </ul>
         <div>{{ treestatus_update_trees_form.status.label }}: {{ treestatus_update_trees_form.status() }}</div>
+        <div>{{ treestatus_update_trees_form.reason_category.label }}: {{ treestatus_update_trees_form.reason_category() }}</div>
         <div>{{ treestatus_update_trees_form.reason.label }}: {{ treestatus_update_trees_form.reason() }}</div>
         <div>{{ treestatus_update_trees_form.remember_this_change.label }}: {{ treestatus_update_trees_form.remember_this_change() }}</div>
         <div>{{ treestatus_update_trees_form.message_of_the_day.label }}: {{ treestatus_update_trees_form.message_of_the_day() }}</div>
-        <div>Reason category</div>
         <div>
             <button class="Treestatus-updateTreeButton button" title="Update Tree">Update trees</button>
         </div>

@@ -46,17 +46,17 @@ fake_trees = {
     "mozilla-central": {
         "log_id": 3,
         "message_of_the_day": "message",
-        "reason": "",
+        "reason": "test coverage",
         "status": "closed",
-        "tags": ["we are CLOSED!"],
+        "tags": ["Waiting for coverage"],
         "tree": "mozilla-central",
     },
     "esr102": {
         "log_id": 4,
         "message_of_the_day": "approval is required.",
-        "reason": "this is an esr.",
+        "reason": "waiting for some chemspill thing",
         "status": "approval required",
-        "tags": ["ESR release train chooo chooo"],
+        "tags": ["Planned closure"],
         "tree": "esr102",
     },
 }
@@ -119,7 +119,7 @@ fake_stack = [
                     "current_log_id": 1,
                     "current_reason": "hgmo is busted",
                     "current_status": "closed",
-                    "current_tags": ["sometag1", "sometag2"],
+                    "current_tags": ["Infrastructure related"],
                     "log_id": None,
                     "reason": "",
                     "status": "open",
@@ -133,7 +133,7 @@ fake_stack = [
                     "current_log_id": 2,
                     "current_reason": "hgmo is busted",
                     "current_status": "closed",
-                    "current_tags": ["sometag1", "sometag2"],
+                    "current_tags": ["Infrastructure related"],
                     "log_id": None,
                     "reason": "",
                     "status": "open",
@@ -160,7 +160,7 @@ fake_stack = [
                     "log_id": None,
                     "reason": "merging",
                     "status": "approval required",
-                    "tags": [],
+                    "tags": ["Merges"],
                 },
                 "tree": "mozilla-central",
             },
@@ -174,7 +174,7 @@ fake_stack = [
                     "log_id": None,
                     "reason": "merging",
                     "status": "approval required",
-                    "tags": [],
+                    "tags": ["Merges"],
                 },
                 "tree": "autoland",
             },
@@ -341,7 +341,7 @@ def update_treestatus():
     status = treestatus_update_trees_form.status.data
     reason = treestatus_update_trees_form.reason.data
     message_of_the_day = treestatus_update_trees_form.message_of_the_day.data
-    tags = treestatus_update_trees_form.tags.data
+    tags = treestatus_update_trees_form.reason_category.data
     remember = treestatus_update_trees_form.remember_this_change.data
 
     return {
@@ -349,7 +349,7 @@ def update_treestatus():
         "status": treestatus_update_trees_form.status.data,
         "reason": treestatus_update_trees_form.reason.data,
         "message_of_the_day": treestatus_update_trees_form.message_of_the_day.data,
-        "tags": treestatus_update_trees_form.tags.data,
+        "tags": treestatus_update_trees_form.reason_category.data,
         "remember": treestatus_update_trees_form.remember_this_change.data,
     }, 200
 
@@ -413,12 +413,14 @@ def update_change(id: int):
     recent_changes_form = TreeStatusRecentChangesForm()
 
     reason = recent_changes_form.reason.data
+    reason_category = recent_changes_form.reason_category.data
 
     return (
         jsonify(
             {
                 "id": id,
                 "reason": reason,
+                "reason_category": reason_category,
             }
         ),
         200,

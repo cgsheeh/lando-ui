@@ -14,6 +14,7 @@
                 <th>ID</th>
                 <th>Status changes</th>
                 <th>Reason</th>
+                <th>Reason Category</th>
                 <th>When</th>
                 <th>Who</th>
                 <th></th>
@@ -41,6 +42,11 @@
                     <td>
                         {% set id_string = "input-reason-" + (status_change_data.id | string) %}
                         {{ status_change_form.reason(disabled=True, id=id_string) }}
+                        <button class="recent-changes-edit" type="button" data-target="{{ id_string }}">Edit</button>
+                    </td>
+                    <td>
+                        {% set id_string = "input-reason-category" + (status_change_data.id | string) %}
+                        {{ status_change_form.reason_category(disabled=True, id=id_string) }}
                         <button class="recent-changes-edit" type="button" data-target="{{ id_string }}">Edit</button>
                     </td>
                     <td>{{ status_change_data.when }}</td>

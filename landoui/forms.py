@@ -155,6 +155,11 @@ class ReasonCategory(enum.Enum):
     INFRASTRUCTURE_RELATED = "Infrastructure related"
     OTHER = "Other"
 
+    @classmethod
+    def to_choices(cls) -> list[tuple[str, str]]:
+        """Return a list of choices for display."""
+        return [(choice.value, choice.value) for choice in list(cls)]
+
 
 def tree_table_widget(field, trees: dict[str, dict], **kwargs) -> str:
     """Render a table with checkbox elements as a selection."""
@@ -225,8 +230,11 @@ class TreeStatusUpdateTreesForm(FlaskForm):
 
     reason = StringField("Reason", validators=[InputRequired("A reason is required.")])
 
-    # TODO this is wrong.
-    tags = SelectField("Tags")
+    reason_category = SelectField(
+        "Reason Category",
+        choices=ReasonCategory.to_choices(),
+        validators=[InputRequired("A reason category is required.")],
+    )
 
     remember_this_change = BooleanField(
         "Remember",
@@ -250,7 +258,11 @@ class TreeStatusRecentChangesForm(FlaskForm):
 
     reason = StringField("Reason")
 
-    reason_category = StringField("Reason Category")
+    reason_category = SelectField(
+        "Reason Category",
+        choices=ReasonCategory.to_choices(),
+        validators=[InputRequired("A reason category is required.")],
+    )
 
     restore = SubmitField("Restore")
 
