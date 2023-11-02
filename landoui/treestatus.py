@@ -33,6 +33,7 @@ from landoui.forms import (
 treestatus_blueprint = Blueprint("treestatus", __name__)
 treestatus_blueprint.before_request(set_last_local_referrer)
 
+
 fake_trees = {
     "autoland": {
         "log_id": 2,
@@ -413,9 +414,12 @@ def update_change(id: int):
 
     reason = recent_changes_form.reason.data
 
-    return jsonify(
-        {
-            "id": id,
-            "reason": reason,
-        }
-    ), 200
+    return (
+        jsonify(
+            {
+                "id": id,
+                "reason": reason,
+            }
+        ),
+        200,
+    )

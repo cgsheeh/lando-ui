@@ -1,6 +1,8 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+import enum
 import json
 
 from json.decoder import JSONDecodeError
@@ -138,6 +140,20 @@ class UserSettingsForm(FlaskForm):
         ],
     )
     reset_phab_api_token = BooleanField("Delete", default="")
+
+
+class ReasonCategory(enum.Enum):
+    """Allowable reasons for a Tree closure."""
+
+    NO_CATEGORY = "No Category"
+    JOB_BACKLOG = "Job Backlog"
+    CHECKIN_COMPILE_FAILURE = "Check-in compilation failure"
+    CHECKIN_TEST_FAILURE = "Check-in test failure"
+    PLANNED_CLOSURE = "Planned closure"
+    MERGES = "Merges"
+    WAITING_FOR_COVERAGE = "Waiting for coverage"
+    INFRASTRUCTURE_RELATED = "Infrastructure related"
+    OTHER = "Other"
 
 
 def tree_table_widget(field, trees: dict[str, dict], **kwargs) -> str:
