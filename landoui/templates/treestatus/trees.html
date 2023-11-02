@@ -21,6 +21,7 @@
             The main Treestatus page is a table that presents the trees.
             Trees can be selected here for updating, or for deletion.
         #}
+        <h2>Trees<h2>
         <a href="{{ url_for("treestatus.new_tree") }}">
             <button class="button" title="New Tree">New Tree</button>
         </a>
@@ -29,7 +30,6 @@
             <div>
                 <button class="Treestatus-updateTreeButton button" title="Update Tree">Update trees</button>
             </div>
-            <h2>Trees<h2>
             <table class="table">
                 <thead>
                     <tr>
