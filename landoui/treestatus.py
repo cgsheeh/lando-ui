@@ -205,7 +205,7 @@ def build_recent_changes_stack(
             TreeStatusRecentChangesForm(
                 id=change["id"],
                 reason=change["reason"],
-                # reason_category=change["tags"],
+                reason_category=change["trees"][0]["last_state"]["current_tags"][0],
                 who=change["who"],
                 when=change["when"],
             ),
