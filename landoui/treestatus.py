@@ -284,9 +284,13 @@ def new_tree_handler():
 @treestatus_blueprint.route("/treestatus/new_tree/", methods=["GET"])
 def new_tree():
     """View for the new tree form."""
+    api = LandoAPI(
+        current_app.config["LANDO_API_URL"],
+        auth0_access_token=session.get("access_token"),
+        phabricator_api_token=get_phabricator_api_token(),
+    )
     treestatus_new_tree_form = TreeStatusNewTreeForm()
 
-    recent_changes_stack = build_recent_changes_stack()
     recent_changes_stack = build_recent_changes_stack(api)
 
     return render_template(
