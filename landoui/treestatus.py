@@ -215,9 +215,10 @@ def treestatus():
 
     treestatus_select_trees_form = TreeStatusSelectTreesForm()
 
-    # trees_response = api.request("GET", "treestatus/trees")
-    # trees = trees_response.get("result")
-    trees = fake_trees
+    trees_response = api.request("GET", "treestatus/trees")
+    trees = trees_response.get("result")
+
+    # trees = fake_trees
     treestatus_select_trees_form.trees.choices = [(tree, tree) for tree in trees.keys()]
 
     recent_changes_stack = build_recent_changes_stack()
@@ -243,14 +244,12 @@ def new_tree_handler():
     # Retrieve data from the form.
     tree = treestatus_new_tree_form.tree.data
 
-    return {"tree": tree}, 200
-
-    # TODO test this actually works with the API.
     try:
         response = api.request(
             "PUT",
             f"treestatus/trees/{tree}",
-            require_auth0=True,
+            # TODO re-enable auth0 requirement.
+            # require_auth0=True,
             json={
                 "tree": tree,
                 # Trees are open on creation.
@@ -267,14 +266,7 @@ def new_tree_handler():
 
     # TODO what to return here? reirect to another page?
     return jsonify(
-        returned=[
-            {
-                "tree": tree,
-                "status": status,
-                "reason": reason,
-                "motd": message_of_the_day,
-            }
-        ]
+        response=response,
     )
 
 
