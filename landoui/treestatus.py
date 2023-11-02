@@ -326,7 +326,7 @@ def update_treestatus():
     status = treestatus_update_trees_form.status.data
     reason = treestatus_update_trees_form.reason.data
     message_of_the_day = treestatus_update_trees_form.message_of_the_day.data
-    tags = treestatus_update_trees_form.reason_category.data
+    reason_category = treestatus_update_trees_form.reason_category.data
     remember = treestatus_update_trees_form.remember_this_change.data
 
     return {
@@ -348,7 +348,7 @@ def update_treestatus():
                 "status": status,
                 "reason": reason,
                 "message_of_the_day": message_of_the_day,
-                "tags": tags,
+                "tags": [reason_category],
                 "remember": remember,
             },
         )
