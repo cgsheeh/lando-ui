@@ -384,19 +384,15 @@ def treestatus_tree(tree: str):
         phabricator_api_token=token,
     )
 
-    # TODO test this works with real data from API.
-    # logs_response = api.request("GET", f"treestatus/trees/{tree}/logs")
-    # logs = logs_response.get("result")
-    # if not logs:
-    #     return render_template("error")
+    logs_response = api.request("GET", f"treestatus/trees/{tree}/logs")
+    # TODO if we don't get any response we should perhaps render a message/error
+    logs = logs_response.get("result") or []
 
     recent_changes_stack = build_recent_changes_stack(api)
 
-    # TODO use real logs.
-    # return render_template("treestatus/log.html", logs=logs)
     return render_template(
         "treestatus/log.html",
-        logs=fake_logs,
+        logs=logs,
         recent_changes_stack=recent_changes_stack,
         tree=tree,
     )
