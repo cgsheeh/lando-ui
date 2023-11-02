@@ -410,12 +410,20 @@ def update_change(id: int):
     reason = recent_changes_form.reason.data
     reason_category = recent_changes_form.reason_category.data
 
+    restore = recent_changes_form.restore.data
+    update = recent_changes_form.update.data
+    discard = recent_changes_form.discard.data
+
+
     return (
         jsonify(
             {
                 "id": id,
                 "reason": reason,
                 "reason_category": reason_category,
+                "restore": restore,
+                "discard": discard,
+                "update": update,
             }
         ),
         200,
