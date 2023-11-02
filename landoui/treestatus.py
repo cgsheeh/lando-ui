@@ -185,8 +185,19 @@ fake_stack = [
 ]
 
 
-def build_recent_changes_stack() -> list[tuple[TreeStatusRecentChangesForm, dict]]:
+def build_recent_changes_stack(api: LandoAPI) -> list[tuple[TreeStatusRecentChangesForm, dict]]:
     """Build the recent changes stack object."""
+    try:
+        response = api.request(
+            "GET",
+            "treestatus/stack",
+        )
+    except LandoAPIError as exc:
+        if not exc.detail:
+            raise exc
+
+        return jsonify(errors=errors), 500
+
     return [
         (
             TreeStatusRecentChangesForm(
@@ -198,7 +209,7 @@ def build_recent_changes_stack() -> list[tuple[TreeStatusRecentChangesForm, dict
             ),
             change,
         )
-        for change in fake_stack
+        for change in response["result"]
     ]
 
 
@@ -274,6 +285,7 @@ def new_tree():
     treestatus_new_tree_form = TreeStatusNewTreeForm()
 
     recent_changes_stack = build_recent_changes_stack()
+    recent_changes_stack = build_recent_changes_stack(api)
 
     return render_template(
         "treestatus/new_tree.html",
@@ -285,6 +297,12 @@ def new_tree():
 @treestatus_blueprint.route("/treestatus/update", methods=["POST"])
 def update_treestatus_form():
     """Web UI for the tree status updating form."""
+    token = get_phabricator_api_token()
+    api = LandoAPI(
+        current_app.config["LANDO_API_URL"],
+        auth0_access_token=session.get("access_token"),
+        phabricator_api_token=token,
+    )
     treestatus_select_trees_form = TreeStatusSelectTreesForm()
 
     # Retrieve trees from the selection form.
@@ -296,7 +314,7 @@ def update_treestatus_form():
     for tree in trees:
         treestatus_update_trees_form.trees.append_entry(tree)
 
-    recent_changes_stack = build_recent_changes_stack()
+    recent_changes_stack = build_recent_changes_stack(api)
 
     return render_template(
         "treestatus/update_trees.html",
@@ -329,20 +347,12 @@ def update_treestatus():
     reason_category = treestatus_update_trees_form.reason_category.data
     remember = treestatus_update_trees_form.remember_this_change.data
 
-    return {
-        "trees": treestatus_update_trees_form.trees.data,
-        "status": treestatus_update_trees_form.status.data,
-        "reason": treestatus_update_trees_form.reason.data,
-        "message_of_the_day": treestatus_update_trees_form.message_of_the_day.data,
-        "tags": treestatus_update_trees_form.reason_category.data,
-        "remember": treestatus_update_trees_form.remember_this_change.data,
-    }, 200
-
     try:
         response = api.request(
             "PATCH",
             "treestatus/trees",
-            require_auth0=True,
+            # TODO re-add auth0 requirement.
+            # require_auth0=True,
             json={
                 "trees": trees,
                 "status": status,
@@ -380,7 +390,7 @@ def treestatus_tree(tree: str):
     # if not logs:
     #     return render_template("error")
 
-    recent_changes_stack = build_recent_changes_stack()
+    recent_changes_stack = build_recent_changes_stack(api)
 
     # TODO use real logs.
     # return render_template("treestatus/log.html", logs=logs)
