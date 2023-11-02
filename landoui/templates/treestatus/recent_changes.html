@@ -17,7 +17,6 @@
                 <th>When</th>
                 <th>Who</th>
                 <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -39,10 +38,13 @@
                             {% endfor %}
                         </ul>
                     </td>
-                    <td>{{ status_change_form.reason() }}</td>
+                    <td>
+                        {% set id_string = "input-reason-" + (status_change_data.id | string) %}
+                        {{ status_change_form.reason(disabled=True, id=id_string) }}
+                        <button class="recent-changes-edit" type="button" data-target="{{ id_string }}">Edit</button>
+                    </td>
                     <td>{{ status_change_data.when }}</td>
                     <td>{{ status_change_data.who }}</td>
-                    <td><button class="recent-changes-edit" type="button" onclick="makeChangeEditable()">Edit</button></td>
                     <td>
                         {{ status_change_form.restore() }}
                         {{ status_change_form.update() }}

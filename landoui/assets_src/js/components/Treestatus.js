@@ -10,10 +10,18 @@ $.fn.treestatus = function() {
     return this.each(function() {
         let $treestatus = $(this);
 
-        // Get each "recent change" form.
-        let $recent_changes = $treestatus.find(".recent-changes-form");
+        // Register an on-click handler for each recent changes edit button.
+        $('.recent-changes-edit').on("click", function () {
+            // Get the `data-target` field for the edit button.
+            let targetId = $(this).data('target');
 
-        // Set the "edit button" to toggle disabled on each text input in the form.
-        
+            // Find the target element.
+            let targetInput = $('#' + targetId);
+
+            // Toggle the `disabled` property on the element.
+            let isDisabled = targetInput.is(':disabled');
+            targetInput.prop('disabled', !isDisabled);
+        });
+
     });
 };
