@@ -22,11 +22,26 @@
             <li>{{ tree.data }} {{ tree }}</li>
             {% endfor %}
         </ul>
-        <div class="field">{{ treestatus_update_trees_form.status.label }}: {{ treestatus_update_trees_form.status() }}</div>
-        <div class="field">{{ treestatus_update_trees_form.reason_category.label }}: {{ treestatus_update_trees_form.reason_category() }}</div>
-        <div class="field">{{ treestatus_update_trees_form.reason.label }}: {{ treestatus_update_trees_form.reason() }}</div>
-        <div class="field">{{ treestatus_update_trees_form.remember_this_change.label }}: {{ treestatus_update_trees_form.remember_this_change() }}</div>
-        <div class="field">{{ treestatus_update_trees_form.message_of_the_day.label }}: {{ treestatus_update_trees_form.message_of_the_day() }}</div>
+        <div class="field">
+            <label class="label">{{ treestatus_update_trees_form.status.label }}</label>
+            <div class="control">{{ treestatus_update_trees_form.status() }}</div>
+        </div>
+        <div class="field">
+            <label class="label">{{ treestatus_update_trees_form.reason_category.label }}</label>
+            <div class="control">{{ treestatus_update_trees_form.reason_category() }}</div>
+        </div>
+        <div class="field">
+            <label class="label">{{ treestatus_update_trees_form.reason.label }}</label>
+            <div class="control">{{ treestatus_update_trees_form.reason() }}</div>
+        </div>
+        <div class="field">
+            <label class="label">{{ treestatus_update_trees_form.remember_this_change.label }}</label>
+            <div class="control">{{ treestatus_update_trees_form.remember_this_change() }}</div>
+        </div>
+        <div class="field">
+            <label class="label">{{ treestatus_update_trees_form.message_of_the_day.label }}</label>
+            <div class="control">{{ treestatus_update_trees_form.message_of_the_day() }}</div>
+        </div>
         <div class="field">
             <button class="Treestatus-updateTreeButton button" title="Update Tree">Update trees</button>
         </div>
