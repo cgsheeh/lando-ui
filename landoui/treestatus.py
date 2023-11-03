@@ -419,9 +419,6 @@ def update_change(id: int):
     )
     recent_changes_form = TreeStatusRecentChangesForm()
 
-    reason = recent_changes_form.reason.data
-    reason_category = recent_changes_form.reason_category.data
-
     restore = recent_changes_form.restore.data
     update = recent_changes_form.update.data
     discard = recent_changes_form.discard.data
@@ -438,6 +435,9 @@ def update_change(id: int):
         # Update is a PATCH with any changed attributes passed in the body.
         method = "PATCH"
         json_body = {}
+
+        reason = recent_changes_form.reason.data
+        reason_category = recent_changes_form.reason_category.data
 
         if reason:
             json_body["reason"] = reason
