@@ -7,24 +7,16 @@
 {# Only render the recent changes header if there are any changes available. #}
 {% if recent_changes_stack %}
 <h1>Recent changes</h1>
-<div class="StackPage-stack">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Status changes</th>
-                <th>Reason</th>
-                <th>Reason Category</th>
-                <th>When</th>
-                <th>Who</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for status_change_form, status_change_data in recent_changes_stack %}
-            <tr>
-                <form class="recent-changes-form" action="{{ url_for("treestatus.update_change", id=status_change_data.id) }}" method="post">
-                    {{ status_change_form.csrf_token }}
-                    <td>
+<div class="container">
+    {% for status_change_form, status_change_data in recent_changes_stack %}
+    <div class="box">
+        <form class="recent-changes-form" action="{{ url_for("treestatus.update_change", id=status_change_data.id) }}" method="post">
+            {{ status_change_form.csrf_token }}
+
+            <div class="columns">
+                <div class="column">
+                    <p>At {{ status_change_data.when }}, {{ status_change_data.who }} changed trees:</p>
+                    <div class="block">
                         <ul>
                             {% for tree in status_change_data.trees %}
                             <li>{{ tree.tree }}
@@ -37,29 +29,29 @@
                             </li>
                             {% endfor %}
                         </ul>
-                    </td>
-                    <td>
+                    </div>
+                    <div class="field">
                         {% set id_string = "input-reason-" + (status_change_data.id | string) %}
-                        {{ status_change_form.reason(disabled=True, id=id_string) }}
+                        <label class="label">{{ status_change_form.reason.label }}</label>
+                        <div class="control">{{ status_change_form.reason(disabled=True, id=id_string) }}</div>
                         <button class="recent-changes-edit" type="button" data-target="{{ id_string }}">Edit</button>
-                    </td>
-                    <td>
+                    </div>
+                    <div class="field">
                         {% set id_string = "input-reason-category" + (status_change_data.id | string) %}
-                        {{ status_change_form.reason_category(disabled=True, id=id_string) }}
+                        <label class="label">{{ status_change_form.reason_category.label }}</label>
+                        <div class="control">{{ status_change_form.reason_category(disabled=True, id=id_string) }}</div>
                         <button class="recent-changes-edit" type="button" data-target="{{ id_string }}">Edit</button>
-                    </td>
-                    <td>{{ status_change_data.when }}</td>
-                    <td>{{ status_change_data.who }}</td>
-                    <td>
-                        {{ status_change_form.restore(class_="button is-success is-small") }}
-                        {{ status_change_form.update(class_="button is-info is-small") }}
-                        {{ status_change_form.discard(class_="button is-danger is-small") }}
-                    </td>
-                </form>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                    </div>
+                </div>
+                <div class="column is-narrow">
+                    {{ status_change_form.restore(class_="button is-success is-small") }}
+                    {{ status_change_form.update(class_="button is-info is-small") }}
+                    {{ status_change_form.discard(class_="button is-danger is-small") }}
+                </div>
+            </div>
+        </form>
+    </div>
+    {% endfor %}
 </div>
 </br>
 {% endif %}
