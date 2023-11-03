@@ -4,6 +4,10 @@
 
 import json
 
+from itertools import (
+    chain,
+)
+
 from flask import (
     Blueprint,
     current_app,
@@ -308,6 +312,10 @@ def update_treestatus_form():
         phabricator_api_token=token,
     )
     treestatus_select_trees_form = TreeStatusSelectTreesForm()
+
+    if not treestatus_select_trees_form.validate():
+        errors = list(chain(*treestatus_select_trees_form.errors.values()))
+        return jsonify(errors=errors), 400
 
     # Retrieve trees from the selection form.
     trees = treestatus_select_trees_form.trees.data

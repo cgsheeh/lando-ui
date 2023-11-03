@@ -30,6 +30,7 @@ from wtforms.validators import (
     DataRequired,
     InputRequired,
     Regexp,
+    ValidationError,
     optional,
 )
 
@@ -234,13 +235,12 @@ class TreeStatusUpdateTreesForm(FlaskForm):
         validators=[InputRequired("A status is required.")],
     )
 
-    # TODO this field is only required when status != "open"
-    reason = StringField("Reason", validators=[InputRequired("A reason is required.")])
+    # TODO this field is required when status != "open"
+    reason = StringField("Reason")
 
     reason_category = SelectField(
         "Reason Category",
         choices=ReasonCategory.to_choices(),
-        validators=[InputRequired("A reason category is required.")],
     )
 
     remember_this_change = BooleanField(
@@ -249,6 +249,24 @@ class TreeStatusUpdateTreesForm(FlaskForm):
     )
 
     message_of_the_day = StringField("Message of the day")
+
+    def validate_reason(self, field):
+        """Validate that the reason field is required for non-open statuses."""
+        reason_is_empty = not field.data 
+        if self.status.data != "open" and reason_is_empty:
+            raise ValidationError(
+                "Reason category is required for non-open status change."
+            )
+
+    def validate_reason_category(self, field):
+        """Validate that the reason category field is required for non-open statuses."""
+        category_is_empty = (
+            not field.data or ReasonCategory(field.data) == ReasonCategory.NO_CATEGORY
+        )
+        if self.status.data != "open" and category_is_empty:
+            raise ValidationError(
+                "Reason category is required for non-open status change."
+            )
 
 
 class TreeStatusNewTreeForm(FlaskForm):
@@ -263,14 +281,13 @@ class TreeStatusNewTreeForm(FlaskForm):
 class TreeStatusRecentChangesForm(FlaskForm):
     """Modify a recent status change."""
 
-    id = HiddenField("Id", validators=[InputRequired("An ID is required.")])
+    id = HiddenField("Id")
 
     reason = StringField("Reason")
 
     reason_category = SelectField(
         "Reason Category",
         choices=ReasonCategory.to_choices(),
-        validators=[InputRequired("A reason category is required.")],
     )
 
     restore = SubmitField("Restore")
