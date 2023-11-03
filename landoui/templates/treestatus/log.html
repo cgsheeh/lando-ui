@@ -8,8 +8,7 @@
 {% block page_title %}Treestatus{% endblock %}
 
 {% block main %}
-<!-- TODO should this page use the same classes as a stack? -->
-<main class="Treestatus StackPage container fullhd">
+<main class="Treestatus container fullhd">
     {% include "treestatus/recent_changes.html" %}
 
     <h1>Treestatus: {{ tree }}</h1>
@@ -17,7 +16,7 @@
     <p>Current status: {{ tree }} is <span class="{{ current_status | treestatus_to_status_badge_class }}">{{ current_status }}</span></p>
 
     <a href="{{ url_for("treestatus.treestatus") }}"><button class="button">Show All Trees</button></a>
-    <div class="StackPage-stack">
+    <div>
         <table class="table">
             <thead>
                 <tr>
