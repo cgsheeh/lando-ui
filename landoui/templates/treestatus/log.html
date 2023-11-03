@@ -27,17 +27,31 @@
                     <th>Reason Category</th>
                     <th>When</th>
                     <th>Who</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                {% for log in logs %}
+                {% for log_update_form, log in logs %}
                     <tr>
-                        <td>{{ log.id }}</td>
-                        <td><span class="{{ log.status | treestatus_to_status_badge_class }}">{{ log.status }}</span></td>
-                        <td>{{ log.reason }}</td>
-                        <td>{{ ", ".join(log.tags) }}</td>
-                        <td>{{ log.when }}</td>
-                        <td>{{ log.who }}</td>
+                        <form class="log-update-form" action="{{ url_for("treestatus.update_log", id=log.id) }}" method="post">
+                            <td>{{ log.id }}</td>
+                            <td><span class="{{ log.status | treestatus_to_status_badge_class }}">{{ log.status }}</span></td>
+                            <td>
+                                {% set id_string = "input-log-reason-" + (log.id | string) %}
+                                {{ log_update_form.reason(disabled=True, id=id_string) }}
+                                <button class="log-update-edit" type="button" data-target="{{ id_string }}">Edit</button>
+                            </td>
+                            <td>
+                                {% set id_string = "input-log-reason-category-" + (log.id | string) %}
+                                {{ log_update_form.reason_category(disabled=True, id=id_string) }}
+                                <button class="log-update-edit" type="button" data-target="{{ id_string }}">Edit</button>
+                            </td>
+                            <td>{{ log.when }}</td>
+                            <td>{{ log.who }}</td>
+                            <td>
+                                <button class="button is-small is-primary">Update</button>
+                            </td>
+                        </form>
                     </tr>
                 {% endfor %}
             </tbody>

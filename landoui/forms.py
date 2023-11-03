@@ -295,3 +295,16 @@ class TreeStatusRecentChangesForm(FlaskForm):
     update = SubmitField("Update")
 
     discard = SubmitField("Discard")
+
+
+class TreeStatusLogUpdateForm(FlaskForm):
+    """Modify a log entry."""
+
+    id = HiddenField("Id")
+
+    reason = StringField("Reason")
+
+    reason_category = SelectField(
+        "Reason Category",
+        choices=ReasonCategory.to_choices(),
+    )

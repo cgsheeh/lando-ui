@@ -28,6 +28,7 @@ from landoui.landoapi import (
     LandoAPIError,
 )
 from landoui.forms import (
+    TreeStatusLogUpdateForm,
     TreeStatusNewTreeForm,
     TreeStatusRecentChangesForm,
     TreeStatusSelectTreesForm,
@@ -400,6 +401,16 @@ def treestatus_tree(tree: str):
     # TODO if we don't get any response we should perhaps render a message/error
     logs = logs_response.get("result") or []
 
+    logs = [
+        (
+            TreeStatusLogUpdateForm(
+                reason=log["reason"], reason_category=log["tags"][0]
+            ),
+            log,
+        )
+        for log in logs
+    ]
+
     recent_changes_stack = build_recent_changes_stack(api)
 
     return render_template(
@@ -457,6 +468,43 @@ def update_change(id: int):
             # TODO re-enable auth0 requirement.
             # require_auth0=True,
             **request_args,
+        )
+    except LandoAPIError as exc:
+        if not exc.detail:
+            raise exc
+
+        return jsonify(errors=[exc.detail]), 500
+
+    return redirect("../../treestatus")
+
+
+@treestatus_blueprint.route("/treestatus/log/<int:id>", methods=["POST"])
+def update_log(id: int):
+    """Handler for log updates."""
+    api = LandoAPI(
+        current_app.config["LANDO_API_URL"],
+        auth0_access_token=session.get("access_token"),
+        phabricator_api_token=get_phabricator_api_token(),
+    )
+
+    log_update_form = TreeStatusLogUpdateForm()
+
+    reason = log_update_form.reason.data
+    reason_category = log_update_form.reason_category.data
+
+    json_body = {}
+
+    if reason:
+        json_body["reason"] = reason
+
+    if reason_category:
+        json_body["tags"] = [reason_category]
+
+    try:
+        response = api.request(
+            "PATCH",
+            f"treestatus/log/{id}",
+            json=json_body,
         )
     except LandoAPIError as exc:
         if not exc.detail:
