@@ -254,7 +254,10 @@ class TreeStatusUpdateTreesForm(FlaskForm):
 class TreeStatusNewTreeForm(FlaskForm):
     """Add a new tree to Treestatus."""
 
-    tree = StringField("Tree", validators=[InputRequired("A tree name is required.")])
+    tree = StringField(
+        "Tree",
+        validators=[InputRequired("A tree name is required.")],
+    )
 
 
 class TreeStatusRecentChangesForm(FlaskForm):

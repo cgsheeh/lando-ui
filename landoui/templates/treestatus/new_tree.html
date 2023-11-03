@@ -15,7 +15,13 @@
     <h1>Treestatus: New tree</h1>
     <form action="{{ url_for("treestatus.new_tree_handler") }}" method="post">
         {{ treestatus_new_tree_form.csrf_token }}
-        {{ treestatus_new_tree_form.tree() }}
+        <div class="field">
+            <label class="label">{{ treestatus_new_tree_form.tree.label }}</label>
+            <div class="control is-expanded">
+                {{ treestatus_new_tree_form.tree(placeholder="New tree name") }}
+            </div>
+            <p class="help">The status will be "open" by default".</p>
+        </div>
         <button class="button">Add tree</button>
     </form>
 </main>
