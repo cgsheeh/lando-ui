@@ -466,6 +466,7 @@ def update_change(id: int):
         method = "PATCH"
 
         reason = recent_changes_form.reason.data
+        # TODO this field is overwritten when it shouldn't be.
         reason_category = recent_changes_form.reason_category.data
 
         request_args = {"json": build_update_json_body(reason, reason_category)}
