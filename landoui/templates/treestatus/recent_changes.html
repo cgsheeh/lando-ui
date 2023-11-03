@@ -16,10 +16,10 @@
             <div class="columns">
                 <div class="column">
                     <p>At {{ status_change_data.when }}, {{ status_change_data.who }} changed trees:</p>
-                    <div class="block">
+                    <div class="block content">
                         <ul>
                             {% for tree in status_change_data.trees %}
-                            <li>{{ tree.tree }}
+                            <li><b>{{ tree.tree }}</b>
                                  from <span class="{{ tree.last_state.status | treestatus_to_status_badge_class }}">
                                     {{ tree.last_state.status }}
                                 </span>
