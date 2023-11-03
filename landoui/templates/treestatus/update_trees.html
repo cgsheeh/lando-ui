@@ -26,14 +26,14 @@
         </div>
         <div class="field">
             <label class="label">{{ treestatus_update_trees_form.status.label }}</label>
-            <div class="control">
-                <div class="select">{{ treestatus_update_trees_form.status() }}</div>
+            <div class="control is-expanded">
+                <div class="select is-fullwidth">{{ treestatus_update_trees_form.status() }}</div>
             </div>
         </div>
         <div class="field">
             <label class="label">{{ treestatus_update_trees_form.reason_category.label }}</label>
-            <div class="control">
-                <div class="select">{{ treestatus_update_trees_form.reason_category() }}</div>
+            <div class="control is-expanded">
+                <div class="select is-fullwidth">{{ treestatus_update_trees_form.reason_category() }}</div>
             </div>
         </div>
         <div class="field">
@@ -43,13 +43,17 @@
         </div>
         <div class="field">
             <label class="checkbox label">
-                {{ treestatus_update_trees_form.remember_this_change(input="class") }}
                 {{ treestatus_update_trees_form.remember_this_change.label }}
             </label>
+            <div class="control">
+                {{ treestatus_update_trees_form.remember_this_change(input="class") }}
+                Remember this change to undo later.
+            </div>
         </div>
         <div class="field">
             <label class="label">{{ treestatus_update_trees_form.message_of_the_day.label }}</label>
             <div class="control">{{ treestatus_update_trees_form.message_of_the_day(class="input") }}</div>
+            <p class="help">Optional</p>
         </div>
         <div class="field">
             <button class="Treestatus-updateTreeButton button" title="Update Tree">Update trees</button>
