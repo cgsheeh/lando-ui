@@ -8,14 +8,13 @@
 {% block page_title %}Treestatus{% endblock %}
 
 {% block main %}
-<!-- TODO should this page use the same classes as a stack? -->
 <main class="Treestatus container fullhd">
     <h1>Treestatus</h1>
     <p>Current status of Mozilla's version-control repositories.</p>
 
     {% include "treestatus/recent_changes.html" %}
 
-    <div class="StackPage-stack">
+    <div>
         {#
             The main Treestatus page is a table that presents the trees.
             Trees can be selected here for updating, or for deletion.
