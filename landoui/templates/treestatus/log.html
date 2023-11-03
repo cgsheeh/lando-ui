@@ -13,7 +13,8 @@
     {% include "treestatus/recent_changes.html" %}
 
     <h1>Treestatus: {{ tree }}</h1>
-    <p>Current status of {{ tree }}.</p>
+    {% set current_status = logs[0].status %}
+    <p>Current status: {{ tree }} is <span class="{{ current_status | treestatus_to_status_badge_class }}">{{ current_status }}</span></p>
 
     <a href="{{ url_for("treestatus.treestatus") }}"><button class="button">Show All Trees</button></a>
     <div class="StackPage-stack">
