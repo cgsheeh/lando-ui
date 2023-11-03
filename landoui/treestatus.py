@@ -7,6 +7,9 @@ import json
 from itertools import (
     chain,
 )
+from typing import (
+    Optional,
+)
 
 from flask import (
     Blueprint,
@@ -421,6 +424,21 @@ def treestatus_tree(tree: str):
     )
 
 
+def build_update_json_body(
+    reason: Optional[str], reason_category: Optional[str]
+) -> dict:
+    """Return a `dict` for use as a JSON body in a log/change update."""
+    json_body = {}
+
+    if reason:
+        json_body["reason"] = reason
+
+    if reason_category:
+        json_body["tags"] = [reason_category]
+
+    return json_body
+
+
 @treestatus_blueprint.route("/treestatus/stack/<int:id>", methods=["POST"])
 def update_change(id: int):
     """Handler for stack updates."""
@@ -446,18 +464,11 @@ def update_change(id: int):
     elif update:
         # Update is a PATCH with any changed attributes passed in the body.
         method = "PATCH"
-        json_body = {}
 
         reason = recent_changes_form.reason.data
         reason_category = recent_changes_form.reason_category.data
 
-        if reason:
-            json_body["reason"] = reason
-
-        if reason_category:
-            json_body["tags"] = [reason_category]
-
-        request_args = {"json": json_body}
+        request_args = {"json": build_update_json_body(reason, reason_category)}
     else:
         raise Exception("TODO")
 
@@ -492,13 +503,7 @@ def update_log(id: int):
     reason = log_update_form.reason.data
     reason_category = log_update_form.reason_category.data
 
-    json_body = {}
-
-    if reason:
-        json_body["reason"] = reason
-
-    if reason_category:
-        json_body["tags"] = [reason_category]
+    json_body = build_update_json_body(reason, reason_category)
 
     try:
         response = api.request(
