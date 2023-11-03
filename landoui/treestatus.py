@@ -425,6 +425,7 @@ def treestatus_tree(tree: str):
     )
 
 
+# TODO test this.
 def build_update_json_body(
     reason: Optional[str], reason_category: Optional[str]
 ) -> dict:
