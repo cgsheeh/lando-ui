@@ -252,7 +252,7 @@ class TreeStatusUpdateTreesForm(FlaskForm):
 
     def validate_reason(self, field):
         """Validate that the reason field is required for non-open statuses."""
-        reason_is_empty = not field.data 
+        reason_is_empty = not field.data
         if self.status.data != "open" and reason_is_empty:
             raise ValidationError(
                 "Reason category is required for non-open status change."
