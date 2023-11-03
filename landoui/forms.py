@@ -244,7 +244,7 @@ class TreeStatusUpdateTreesForm(FlaskForm):
     )
 
     remember_this_change = BooleanField(
-        "Remember",
+        "Remember this change",
         default=True,
     )
 
