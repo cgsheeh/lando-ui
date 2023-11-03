@@ -231,7 +231,6 @@ def treestatus():
     trees_response = api.request("GET", "treestatus/trees")
     trees = trees_response.get("result")
 
-    # trees = fake_trees
     treestatus_select_trees_form.trees.choices = [(tree, tree) for tree in trees.keys()]
 
     recent_changes_stack = build_recent_changes_stack(api)
