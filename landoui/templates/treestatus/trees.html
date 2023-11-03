@@ -26,6 +26,8 @@
         </a>
         <button class="button select-all-trees">Select all trees</button>
         <form action="{{ url_for("treestatus.update_treestatus_form") }}" method="post">
+            {{ treestatus_select_trees_form.csrf_token }}
+
             <div>
                 <button class="Treestatus-updateTreeButton button is-primary" title="Update Tree">Update trees</button>
             </div>
