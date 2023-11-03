@@ -161,6 +161,19 @@ class ReasonCategory(enum.Enum):
         """Return a list of choices for display."""
         return [(choice.value, choice.value) for choice in list(cls)]
 
+    @classmethod
+    def is_valid_reason_category(cls, value: str) -> bool:
+        """Return `True` if `value` is a valid `ReasonCategory`.
+
+        Once we are using Python 3.12+, we can switch to `value in ReasonCategory`.
+        """
+        try:
+            cls(value)
+        except ValueError:
+            return False
+
+        return True
+
 
 def tree_table_widget(field, trees: dict[str, dict], **kwargs) -> str:
     """Render a table with checkbox elements as a selection."""
