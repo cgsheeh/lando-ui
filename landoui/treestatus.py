@@ -215,7 +215,6 @@ def build_recent_changes_stack(
     ]
 
 
-# TODO doesn't work
 @treestatus_blueprint.route("/treestatus/", methods=["GET"])
 def treestatus():
     """Display the status of all the current trees."""
@@ -378,7 +377,6 @@ def update_treestatus():
     return redirect("../treestatus")
 
 
-# TODO doesn't work
 @treestatus_blueprint.route("/treestatus/<tree>/", methods=["GET"])
 def treestatus_tree(tree: str):
     """Display the log of statuses for a given tree."""
