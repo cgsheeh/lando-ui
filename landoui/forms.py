@@ -225,7 +225,6 @@ class TreeStatusSelectTreesForm(FlaskForm):
     """Form used to select trees for updating."""
 
     trees = MultiCheckboxField(
-        # TODO this isn't properly checking the data is passed as I cna still pass empty trees.
         "Trees",
         validators=[DataRequired("A selection of trees is required.")],
     )
