@@ -31,8 +31,10 @@
             </thead>
             <tbody>
                 {% for log_update_form, log in logs %}
-                    <tr>
-                        <form class="log-update-form" action="{{ url_for("treestatus.update_log", id=log.id) }}" method="post">
+                    <!-- TODO put this class on the right field after converting from row -->
+                    <!-- why doesn't it select the form? -->
+                    <tr class="log-update-form">
+                        <form action="{{ url_for("treestatus.update_log", id=log.id) }}" method="post">
                             <td>{{ log.id }}</td>
                             <td><span class="{{ log.status | treestatus_to_status_badge_class }}">{{ log.status }}</span></td>
                             <td>

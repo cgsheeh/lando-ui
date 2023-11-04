@@ -24,13 +24,15 @@ $.fn.treestatus = function() {
         });
 
         // Hide the initially-hidden log update elements.
+        // TODO this draws in a funky way, how to hide elements before this runs?
         $('.log-update-hidden').toggle();
 
         // Register an on-click handler for each log update edit button.
         $('.log-update-edit').on("click", function () {
             // Toggle the elements from hidden/visible.
-            $('.log-update-hidden').toggle();
-            $('.log-update-visible').toggle();
+            var closest_form = $(this).closest('.log-update-form');
+            closest_form.find('.log-update-hidden').toggle();
+            closest_form.find('.log-update-visible').toggle();
         });
 
         // Toggle selected on all trees.
