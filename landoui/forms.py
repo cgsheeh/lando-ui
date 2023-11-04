@@ -175,6 +175,7 @@ class ReasonCategory(enum.Enum):
         return True
 
 
+# TODO can we make the trees a FieldList of checkboxes instead?
 def tree_table_widget(field, trees: dict[str, dict], **kwargs) -> str:
     """Render a table with checkbox elements as a selection."""
     kwargs.setdefault("type", "checkbox")
