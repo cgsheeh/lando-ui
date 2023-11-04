@@ -36,19 +36,19 @@
                             <td>{{ log.id }}</td>
                             <td><span class="{{ log.status | treestatus_to_status_badge_class }}">{{ log.status }}</span></td>
                             <td>
-                                {% set id_string = "input-log-reason-" + (log.id | string) %}
-                                {{ log_update_form.reason(disabled=True, id=id_string) }}
-                                <button class="log-update-edit" type="button" data-target="{{ id_string }}">Edit</button>
+                                <p class="log-update-visible">{{ log.reason }}</p>
+                                {{ log_update_form.reason(id=id_string, class="log-update-hidden") }}
                             </td>
                             <td>
-                                {% set id_string = "input-log-reason-category-" + (log.id | string) %}
-                                {{ log_update_form.reason_category(disabled=True, id=id_string) }}
-                                <button class="log-update-edit" type="button" data-target="{{ id_string }}">Edit</button>
+                                <p class="log-update-visible">{{ log_update_form.reason_category.data }}</p>
+                                {{ log_update_form.reason_category(id=id_string, class="log-update-hidden") }}
                             </td>
                             <td>{{ log.when }}</td>
                             <td>{{ log.who }}</td>
                             <td>
-                                <button class="button is-small is-primary">Update</button>
+                                <button class="button is-small is-primary log-update-edit log-update-visible" type="button" data-target="{{ form_class }}">Edit</button>
+                                <button class="button is-small is-primary log-update-hidden">Update</button>
+                                <button class="button is-small log-update-edit log-update-hidden" type="button"></button>
                             </td>
                         </form>
                     </tr>
