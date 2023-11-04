@@ -20,14 +20,14 @@
             Trees can be selected here for updating, or for deletion.
         #}
         <h2>Trees<h2>
-        <a href="{{ url_for("treestatus.new_tree") }}">
-            <button class="button" title="New Tree">New Tree</button>
-        </a>
-        <button class="button select-all-trees">Select all trees</button>
         <form action="{{ url_for("treestatus.update_treestatus_form") }}" method="post">
             {{ treestatus_select_trees_form.csrf_token }}
 
             <div>
+            <a href="{{ url_for("treestatus.new_tree") }}">
+                <button class="button" title="New Tree" type="button">New Tree</button>
+            </a>
+            <button class="button select-all-trees" type="button">Select all trees</button>
                 <button class="button is-primary" title="Update Tree">Update trees</button>
             </div>
             <table class="table">
