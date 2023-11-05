@@ -426,6 +426,7 @@ def treestatus_tree(tree: str):
 
 
 # TODO test this.
+# TODO clearing reason doesn't work here
 def build_update_json_body(
     reason: Optional[str], reason_category: Optional[str]
 ) -> dict:
