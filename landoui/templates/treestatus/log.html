@@ -34,8 +34,9 @@
                 {% for log_update_form, log in logs %}
                     <!-- TODO put this class on the right field after converting from row -->
                     <!-- why doesn't it select the form? -->
-                    <tr class="log-update-form">
-                        <form action="{{ url_for("treestatus.update_log", id=log.id) }}" method="post">
+                    <form action="{{ url_for("treestatus.update_log", id=log.id) }}" method="post">
+                        {{ log_update_form.csrf_token }}
+                        <tr class="log-update-form">
                             <td>{{ log.id }}</td>
                             <td><span class="{{ log.status | treestatus_to_status_badge_class }}">{{ log.status }}</span></td>
                             <td>
@@ -53,8 +54,8 @@
                                 <button class="button is-small is-primary log-update-hidden">Update</button>
                                 <button class="button delete is-normal log-update-edit log-update-hidden" type="button"></button>
                             </td>
-                        </form>
-                    </tr>
+                        </tr>
+                    </form>
                 {% endfor %}
             </tbody>
         </table>
