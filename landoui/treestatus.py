@@ -18,6 +18,7 @@ from flask import (
     redirect,
     render_template,
     session,
+    url_for,
 )
 
 from landoui.helpers import (
@@ -285,7 +286,7 @@ def new_tree_handler():
         return jsonify(errors=[exc.detail]), 500
 
     # TODO Should we show some success message on this page?
-    return redirect("../../treestatus")
+    return redirect(url_for("treestatus.treestatus"))
 
 
 @treestatus_blueprint.route("/treestatus/new_tree/", methods=["GET"])
@@ -388,7 +389,7 @@ def update_treestatus():
         return jsonify(errors=errors), 500
 
     # Redirect to the main Treestatus page.
-    return redirect("../treestatus")
+    return redirect(url_for("treestatus.treestatus"))
 
 
 @treestatus_blueprint.route("/treestatus/<tree>/", methods=["GET"])
@@ -489,7 +490,7 @@ def update_change(id: int):
 
         return jsonify(errors=[exc.detail]), 500
 
-    return redirect("../../treestatus")
+    return redirect(url_for("treestatus.treestatus"))
 
 
 @treestatus_blueprint.route("/treestatus/log/<int:id>", methods=["POST"])
@@ -520,4 +521,4 @@ def update_log(id: int):
 
         return jsonify(errors=[exc.detail]), 500
 
-    return redirect("../../treestatus")
+    return redirect(url_for("treestatus.treestatus"))
