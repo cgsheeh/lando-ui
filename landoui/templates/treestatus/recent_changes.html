@@ -34,23 +34,31 @@
                             {% endfor %}
                         </ul>
                     </div>
-                    <div class="field">
-                        {% set id_string = "input-reason-" + (status_change_data.id | string) %}
-                        <label class="label">{{ status_change_form.reason.label }}</label>
-                        <div class="control">{{ status_change_form.reason(disabled=True, id=id_string) }}</div>
-                        <button class="recent-changes-edit" type="button" data-target="{{ id_string }}">Edit</button>
+                    <div class="recent-changes-update-visible">
+                        <p>Reason: <b>{{ status_change_form.reason.data }}</b></p>
+                        <p>Reason category: <b>{{ status_change_form.reason_category.data }}</b></p>
                     </div>
-                    <div class="field">
-                        {% set id_string = "input-reason-category" + (status_change_data.id | string) %}
-                        <label class="label">{{ status_change_form.reason_category.label }}</label>
-                        <div class="control">{{ status_change_form.reason_category(disabled=True, id=id_string) }}</div>
-                        <button class="recent-changes-edit" type="button" data-target="{{ id_string }}">Edit</button>
+                    <div class="recent-changes-update-hidden">
+                        <div class="field">
+                            <label class="label">{{ status_change_form.reason.label }}</label>
+                            <div class="control">{{ status_change_form.reason }}</div>
+                        </div>
+                        <div class="field">
+                            <label class="label">{{ status_change_form.reason_category.label }}</label>
+                            <div class="control">{{ status_change_form.reason_category }}</div>
+                        </div>
                     </div>
                 </div>
                 <div class="column is-narrow">
-                    {{ status_change_form.restore(class_="button is-success is-small") }}
-                    {{ status_change_form.update(class_="button is-info is-small") }}
-                    {{ status_change_form.discard(class_="button is-danger is-small") }}
+                    <div class="recent-changes-update-visible">
+                        {{ status_change_form.restore(class_="button is-success is-small") }}
+                        <button class="button is-info is-small recent-changes-edit" type="button">Edit</button>
+                        {{ status_change_form.discard(class_="button is-danger is-small") }}
+                    </div>
+                    <div class="recent-changes-update-hidden">
+                        {{ status_change_form.update(class_="button is-info is-small") }}
+                        <button class="button delete is-normal recent-changes-edit" type="button"></button>
+                    </div>
                 </div>
             </div>
         </form>

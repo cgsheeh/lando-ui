@@ -10,19 +10,6 @@ $.fn.treestatus = function() {
     return this.each(function() {
         let $treestatus = $(this);
 
-        // Register an on-click handler for each recent changes edit button.
-        $('.recent-changes-edit').on("click", function () {
-            // Get the `data-target` field for the edit button.
-            let targetId = $(this).data('target');
-
-            // Find the target element.
-            let targetInput = $('#' + targetId);
-
-            // Toggle the `disabled` property on the element.
-            let isDisabled = targetInput.is(':disabled');
-            targetInput.prop('disabled', !isDisabled);
-        });
-
         // Hide the initially-hidden log update elements.
         // TODO this draws in a funky way, how to hide elements before this runs?
         $('.log-update-hidden').toggle();
@@ -33,6 +20,17 @@ $.fn.treestatus = function() {
             var closest_form = $(this).closest('.log-update-form');
             closest_form.find('.log-update-hidden').toggle();
             closest_form.find('.log-update-visible').toggle();
+        });
+
+        // Hide the initially-hidden changes update elements.
+        // TODO hide elements in CSS instead of here in JS.
+        $('.recent-changes-update-hidden').toggle();
+
+        $('.recent-changes-edit').on("click", function () {
+            // Toggle the elements from hidden/visible.
+            var closest_form = $(this).closest('.recent-changes-form');
+            closest_form.find('.recent-changes-update-hidden').toggle();
+            closest_form.find('.recent-changes-update-visible').toggle();
         });
 
         // Toggle selected on all trees.
