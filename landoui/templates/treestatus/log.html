@@ -33,7 +33,6 @@
             <tbody>
                 {% for log_update_form, log in logs %}
                     <!-- TODO put this class on the right field after converting from row -->
-                    <!-- why doesn't it select the form? -->
                     <form action="{{ url_for("treestatus.update_log", id=log.id) }}" method="post">
                         {{ log_update_form.csrf_token }}
                         <tr class="log-update-form">
