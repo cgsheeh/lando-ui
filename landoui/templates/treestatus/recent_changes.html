@@ -13,10 +13,6 @@
         <form class="recent-changes-form" action="{{ url_for("treestatus.update_change", id=status_change_data.id) }}" method="post">
             {{ status_change_form.csrf_token }}
 
-            <!-- TODO fix styling for: -->
-            <!-- - reason -->
-            <!-- - reason category -->
-            <!-- - bolding relevant text -->
             <div class="columns">
                 <div class="column">
                     <p>At {{ status_change_data.when }}, {{ status_change_data.who }} changed trees:</p>
