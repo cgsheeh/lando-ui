@@ -12,6 +12,7 @@
     {% include "treestatus/recent_changes.html" %}
 
     <h1>Treestatus: {{ tree }}</h1>
+    <!-- TODO this fails when tree is brand new -->
     {% set current_status = logs[0].status %}
     <p>Current status: {{ tree }} is <span class="{{ current_status | treestatus_to_status_badge_class }}">{{ current_status }}</span></p>
 
