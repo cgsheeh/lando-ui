@@ -409,7 +409,9 @@ def treestatus_tree(tree: str):
     logs = [
         (
             TreeStatusLogUpdateForm(
-                reason=log["reason"], reason_category=log["tags"][0]
+                reason=log["reason"],
+                # TODO is "No Category" right here?
+                reason_category=log["tags"][0] if log["tags"] else ReasonCategory.NO_CATEGORY.value,
             ),
             log,
         )
