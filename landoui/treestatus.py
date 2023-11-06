@@ -14,6 +14,7 @@ from typing import (
 from flask import (
     Blueprint,
     current_app,
+    flash,
     jsonify,
     redirect,
     render_template,
@@ -252,18 +253,10 @@ def treestatus():
     )
 
 
-@treestatus_blueprint.route("/treestatus/new_tree/", methods=["POST"])
-def new_tree_handler():
+def new_tree_handler(api: LandoAPI, form: TreeStatusNewTreeForm):
     """Handler for the new tree form."""
-    api = LandoAPI(
-        current_app.config["LANDO_API_URL"],
-        auth0_access_token=session.get("access_token"),
-        phabricator_api_token=get_phabricator_api_token(),
-    )
-    treestatus_new_tree_form = TreeStatusNewTreeForm()
-
     # Retrieve data from the form.
-    tree = treestatus_new_tree_form.tree.data
+    tree = form.tree.data
 
     try:
         response = api.request(
@@ -283,13 +276,14 @@ def new_tree_handler():
         if not exc.detail:
             raise exc
 
+        # TODO better handling
         return jsonify(errors=[exc.detail]), 500
 
-    # TODO Should we show some success message on this page?
+    flash(f"New tree {tree} created successfully.")
     return redirect(url_for("treestatus.treestatus"))
 
 
-@treestatus_blueprint.route("/treestatus/new_tree/", methods=["GET"])
+@treestatus_blueprint.route("/treestatus/new_tree/", methods=["GET", "POST"])
 def new_tree():
     """View for the new tree form."""
     api = LandoAPI(
@@ -298,6 +292,9 @@ def new_tree():
         phabricator_api_token=get_phabricator_api_token(),
     )
     treestatus_new_tree_form = TreeStatusNewTreeForm()
+
+    if treestatus_new_tree_form.validate_on_submit():
+        return new_tree_handler(api, treestatus_new_tree_form)
 
     recent_changes_stack = build_recent_changes_stack(api)
 
