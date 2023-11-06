@@ -9,6 +9,16 @@
 
 {% block main %}
 <main class="Treestatus container fullhd">
+    <!-- TODO this creates a second weird div -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-success">
+                <button class="delete"></button>
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endwith %}
+
     <h1>Treestatus</h1>
     <p>Current status of Mozilla's version-control repositories.</p>
 
