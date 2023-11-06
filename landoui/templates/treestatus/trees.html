@@ -14,12 +14,12 @@
 
     {% include "treestatus/recent_changes.html" %}
 
+    <h1>Trees</h1>
     <div class="box">
         {#
             The main Treestatus page is a table that presents the trees.
             Trees can be selected here for updating, or for deletion.
         #}
-        <h2>Trees</h2>
         <form action="{{ url_for("treestatus.update_treestatus_form") }}" method="post">
             {{ treestatus_select_trees_form.csrf_token }}
 
