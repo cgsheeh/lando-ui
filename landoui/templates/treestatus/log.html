@@ -15,7 +15,9 @@
     {% set current_status = logs[0].status if logs else "open" %}
     <p>Current status: {{ tree }} is <span class="{{ current_status | treestatus_to_status_badge_class }}">{{ current_status }}</span></p>
 
-    <a href="{{ url_for("treestatus.treestatus") }}"><button class="button">Show All Trees</button></a>
+    <div class="block">
+        <a href="{{ url_for("treestatus.treestatus") }}"><button class="button">Show All Trees</button></a>
+    </div>
     <div class="container">
         {% for log_update_form, log in logs %}
             <!-- TODO put this class on the right field after converting from row -->
