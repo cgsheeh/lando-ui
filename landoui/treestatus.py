@@ -386,6 +386,7 @@ def update_treestatus():
         return jsonify(errors=errors), 500
 
     # Redirect to the main Treestatus page.
+    flash("Tree statuses updated successfully.")
     return redirect(url_for("treestatus.treestatus"))
 
 
@@ -460,10 +461,14 @@ def update_change(id: int):
         # Restore is a DELETE with a status revert.
         method = "DELETE"
         request_args = {"params": {"revert": 1}}
+
+        flash_message = "Statuses change restored."
     elif discard:
         # Discard is a DELETE without a status revert.
         method = "DELETE"
         request_args = {"params": {"revert": 0}}
+
+        flash_message = "Status change discarded."
     elif update:
         # Update is a PATCH with any changed attributes passed in the body.
         method = "PATCH"
@@ -472,6 +477,8 @@ def update_change(id: int):
         reason_category = recent_changes_form.reason_category.data
 
         request_args = {"json": build_update_json_body(reason, reason_category)}
+
+        flash_message = "Status change updated."
     else:
         raise Exception("TODO")
 
@@ -489,6 +496,7 @@ def update_change(id: int):
 
         return jsonify(errors=[exc.detail]), 500
 
+    flash(flash_message)
     return redirect(url_for("treestatus.treestatus"))
 
 
@@ -520,4 +528,5 @@ def update_log(id: int):
 
         return jsonify(errors=[exc.detail]), 500
 
+    flash("Log entry updated.")
     return redirect(url_for("treestatus.treestatus"))
