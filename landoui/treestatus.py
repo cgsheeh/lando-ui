@@ -18,6 +18,7 @@ from flask import (
     jsonify,
     redirect,
     render_template,
+    request,
     session,
     url_for,
 )
@@ -497,7 +498,7 @@ def update_change(id: int):
         return jsonify(errors=[exc.detail]), 500
 
     flash(flash_message)
-    return redirect(url_for("treestatus.treestatus"))
+    return redirect(request.referrer)
 
 
 @treestatus_blueprint.route("/treestatus/log/<int:id>", methods=["POST"])
@@ -529,4 +530,4 @@ def update_log(id: int):
         return jsonify(errors=[exc.detail]), 500
 
     flash("Log entry updated.")
-    return redirect(url_for("treestatus.treestatus"))
+    return redirect(request.referrer)
