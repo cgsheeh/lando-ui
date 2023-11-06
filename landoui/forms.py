@@ -175,57 +175,10 @@ class ReasonCategory(enum.Enum):
         return True
 
 
-# TODO can we make the trees a FieldList of checkboxes instead?
-def tree_table_widget(field, trees: dict[str, dict], **kwargs) -> str:
-    """Render a table with checkbox elements as a selection."""
-    kwargs.setdefault("type", "checkbox")
-    field_id = kwargs.pop("id", field.id)
-
-    html = []
-
-    for value, label, checked in field.iter_choices():
-        tree = trees[value]
-
-        options = dict(
-            kwargs,
-            class_="tree-select-checkbox",
-            name=field.name,
-            value=value,
-            id=field_id,
-        )
-        checkbox_options = widgets.html_params(**options)
-        row = (
-            "<tr>"
-            f"<td><input {checkbox_options} /></td>"
-            f'<td><a href="{value}">{value}</a></td>'
-            # TODO resolve this dependency loop
-            # f'<td><span class="{treestatus_to_status_badge_class(tree["status"])}">{tree["status"]}</span></td>'
-            f'<td><span class="{tree["status"]}">{tree["status"]}</span></td>'
-            f"<td>{tree['reason']}</td>"
-            f"<td>{', '.join(tree['tags'])}</td>"
-            f"<td>{tree['message_of_the_day']}</td>"
-            "</tr>"
-        )
-        html.append(row)
-
-    return "\n".join(html)
-
-
-class TableSelectWidget(widgets.TableWidget):
-    def __call__(self, field, trees=None, **kwargs):
-        return tree_table_widget(field, trees=trees)
-
-
-class MultiCheckboxField(SelectMultipleField):
-    """Multiple select with a series of checkboxes."""
-
-    widget = TableSelectWidget()
-
-
 class TreeStatusSelectTreesForm(FlaskForm):
     """Form used to select trees for updating."""
 
-    trees = MultiCheckboxField(
+    trees = SelectMultipleField(
         "Trees",
         validators=[DataRequired("A selection of trees is required.")],
     )

@@ -23,28 +23,41 @@
         <form action="{{ url_for("treestatus.update_treestatus_form") }}" method="post">
             {{ treestatus_select_trees_form.csrf_token }}
 
-            <div>
+            <div class="block">
                 <a href="{{ url_for("treestatus.new_tree") }}">
                     <button class="button" title="New Tree" type="button">New Tree</button>
                 </a>
                 <button class="button select-all-trees" type="button">Select all trees</button>
                 <button class="button is-primary" title="Update Tree">Update trees</button>
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Reason</th>
-                        <th>Reason Category</th>
-                        <th>Message of the Day</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{ treestatus_select_trees_form.trees(trees=trees) | safe }}
-                </tbody>
-            </table>
+            <div class="block">
+                {% for tree_option in treestatus_select_trees_form.trees %}
+                {% set tree = trees[tree_option.data] %}
+                    <div class="box">
+                        <div class="columns">
+                            <div class="column is-1">
+                                <input class="tree-select-checkbox" type="checkbox" name="{{ tree_option.id }}" value="{{ tree_option.data }}">
+                            </div>
+                            <div class="column is-2">
+                                <span class="{{ tree.status | treestatus_to_status_badge_class }}">{{ tree.status }}</span>
+                            </div>
+                            <div class="column">
+                                <a href="{{ tree_option.data }}"><h2 class="subtitle is-4">{{ tree_option.data }}</h2></a>
+                            </div>
+                            <div class="column">
+                                {% if tree.reason %}
+                                Reason: {{ tree.reason }}, Category {{ tree.tags[0] }}
+                                {% endif %}
+                            </div>
+                            <div class="column">
+                                {% if tree.message_of_the_day %}
+                                    {{ tree.message_of_the_day }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </form>
     </div>
 </main>
