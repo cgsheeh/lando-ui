@@ -20,22 +20,28 @@
     <div class="container">
         {% for log_update_form, log in logs %}
             <!-- TODO put this class on the right field after converting from row -->
+            <!-- TODO still looks a tad funky with spacing etc -->
             <form action="{{ url_for("treestatus.update_log", id=log.id) }}" method="post">
                 {{ log_update_form.csrf_token }}
 
                 <div class="box log-update-form">
                     <div class="columns">
-                        <div class="column"><span class="{{ log.status | treestatus_to_status_badge_class }}">{{ log.status }}</span></div>
-                        <div class="column">{{ log.who }} changed the status at {{ log.when }}.</div>
-                        <div class="column">
-                            <p class="log-update-visible">{{ log.reason }}</p>
-                            {{ log_update_form.reason(id=id_string, class="log-update-hidden") }}
+                        <div class="column is-2">
+                            <span class="{{ log.status | treestatus_to_status_badge_class }}">{{ log.status }}</span>
                         </div>
-                        <div class="column">
-                            <p class="log-update-visible">{{ log_update_form.reason_category.data }}</p>
-                            {{ log_update_form.reason_category(id=id_string, class="log-update-hidden") }}
+                        <div class="column is-expanded">
+                            <div class="block"><b>{{ log.when }}</b></div>
+                            <div class="block">{{ log.who }}</div>
+                            <div class="block">
+                                <p class="log-update-visible">{{ log_update_form.reason.label }}: <b>{{ log.reason }}</b></p>
+                                {{ log_update_form.reason(id=id_string, class="log-update-hidden") }}
+                            </div>
+                            <div class="block">
+                                <p class="log-update-visible">{{ log_update_form.reason_category.label }}: <b>{{ log_update_form.reason_category.data }}</b></p>
+                                {{ log_update_form.reason_category(id=id_string, class="log-update-hidden") }}
+                            </div>
                         </div>
-                        <div class="column">
+                        <div class="column is-narrow">
                             <button class="button is-small is-primary log-update-edit log-update-visible" type="button" data-target="{{ form_class }}">Edit</button>
                             <button class="button is-small is-primary log-update-hidden">Update</button>
                             <button class="button delete is-normal log-update-edit log-update-hidden" type="button"></button>
