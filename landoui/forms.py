@@ -36,8 +36,6 @@ TREESTATUS_CHOICES = [
     ("approval required", "Approval Required"),
 ]
 
-# from landoui.template_helpers import treestatus_to_status_badge_class
-
 
 class JSONDecodable:
     def __init__(
