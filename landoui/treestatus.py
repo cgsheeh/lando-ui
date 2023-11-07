@@ -384,8 +384,10 @@ def new_tree_handler(api: LandoAPI, form: TreeStatusNewTreeForm):
         if not exc.detail:
             raise exc
 
-        # TODO better handling
-        return jsonify(errors=[exc.detail]), 500
+        flash(
+            f"Could not create new tree: {exc.detail}. Please try again later.", "error"
+        )
+        return redirect(request.referrer), 500
 
     flash(f"New tree {tree} created successfully.")
     return redirect(url_for("treestatus.treestatus"))
