@@ -10,7 +10,6 @@ from flask import (
     Blueprint,
     current_app,
     flash,
-    jsonify,
     redirect,
     render_template,
     request,
@@ -175,8 +174,8 @@ def update_treestatus():
         if not exc.detail:
             raise exc
 
-        errors.append(exc.detail)
-        return jsonify(errors=errors), 500
+        flash(f"Could not update trees: {exc.detail}. Please try again later.", "error")
+        return redirect(request.referrer), 500
 
     # Redirect to the main Treestatus page.
     flash("Tree statuses updated successfully.")
@@ -349,7 +348,11 @@ def update_change(id: int):
         if not exc.detail:
             raise exc
 
-        return jsonify(errors=[exc.detail]), 500
+        flash(
+            f"Could not modify recent change: {exc.detail}. Please try again later.",
+            "error",
+        )
+        return redirect(request.referrer), 500
 
     flash(flash_message)
     return redirect(request.referrer)
@@ -381,7 +384,11 @@ def update_log(id: int):
         if not exc.detail:
             raise exc
 
-        return jsonify(errors=[exc.detail]), 500
+        flash(
+            f"Could not modify log entry: {exc.detail}. Please try again later.",
+            "error",
+        )
+        return redirect(request.referrer), 500
 
     flash("Log entry updated.")
     return redirect(request.referrer)
