@@ -255,58 +255,6 @@ def treestatus():
     )
 
 
-def new_tree_handler(api: LandoAPI, form: TreeStatusNewTreeForm):
-    """Handler for the new tree form."""
-    # Retrieve data from the form.
-    tree = form.tree.data
-
-    try:
-        response = api.request(
-            "PUT",
-            f"treestatus/trees/{tree}",
-            # TODO re-enable auth0 requirement.
-            # require_auth0=True,
-            json={
-                "tree": tree,
-                # Trees are open on creation.
-                "status": "open",
-                "reason": "",
-                "message_of_the_day": "",
-            },
-        )
-    except LandoAPIError as exc:
-        if not exc.detail:
-            raise exc
-
-        # TODO better handling
-        return jsonify(errors=[exc.detail]), 500
-
-    flash(f"New tree {tree} created successfully.")
-    return redirect(url_for("treestatus.treestatus"))
-
-
-@treestatus_blueprint.route("/treestatus/new_tree/", methods=["GET", "POST"])
-def new_tree():
-    """View for the new tree form."""
-    api = LandoAPI(
-        current_app.config["LANDO_API_URL"],
-        auth0_access_token=session.get("access_token"),
-        phabricator_api_token=get_phabricator_api_token(),
-    )
-    treestatus_new_tree_form = TreeStatusNewTreeForm()
-
-    if treestatus_new_tree_form.validate_on_submit():
-        return new_tree_handler(api, treestatus_new_tree_form)
-
-    recent_changes_stack = build_recent_changes_stack(api)
-
-    return render_template(
-        "treestatus/new_tree.html",
-        treestatus_new_tree_form=treestatus_new_tree_form,
-        recent_changes_stack=recent_changes_stack,
-    )
-
-
 @treestatus_blueprint.route("/treestatus/update", methods=["POST"])
 def update_treestatus_form():
     """Web UI for the tree status updating form."""
@@ -388,6 +336,58 @@ def update_treestatus():
 
     # Redirect to the main Treestatus page.
     flash("Tree statuses updated successfully.")
+    return redirect(url_for("treestatus.treestatus"))
+
+
+@treestatus_blueprint.route("/treestatus/new_tree/", methods=["GET", "POST"])
+def new_tree():
+    """View for the new tree form."""
+    api = LandoAPI(
+        current_app.config["LANDO_API_URL"],
+        auth0_access_token=session.get("access_token"),
+        phabricator_api_token=get_phabricator_api_token(),
+    )
+    treestatus_new_tree_form = TreeStatusNewTreeForm()
+
+    if treestatus_new_tree_form.validate_on_submit():
+        return new_tree_handler(api, treestatus_new_tree_form)
+
+    recent_changes_stack = build_recent_changes_stack(api)
+
+    return render_template(
+        "treestatus/new_tree.html",
+        treestatus_new_tree_form=treestatus_new_tree_form,
+        recent_changes_stack=recent_changes_stack,
+    )
+
+
+def new_tree_handler(api: LandoAPI, form: TreeStatusNewTreeForm):
+    """Handler for the new tree form."""
+    # Retrieve data from the form.
+    tree = form.tree.data
+
+    try:
+        response = api.request(
+            "PUT",
+            f"treestatus/trees/{tree}",
+            # TODO re-enable auth0 requirement.
+            # require_auth0=True,
+            json={
+                "tree": tree,
+                # Trees are open on creation.
+                "status": "open",
+                "reason": "",
+                "message_of_the_day": "",
+            },
+        )
+    except LandoAPIError as exc:
+        if not exc.detail:
+            raise exc
+
+        # TODO better handling
+        return jsonify(errors=[exc.detail]), 500
+
+    flash(f"New tree {tree} created successfully.")
     return redirect(url_for("treestatus.treestatus"))
 
 
