@@ -212,7 +212,6 @@ class TreeStatusUpdateTreesForm(FlaskForm):
         validators=[InputRequired("A status is required.")],
     )
 
-    # TODO this field is required when status != "open"
     reason = StringField("Reason")
 
     reason_category = SelectField(
