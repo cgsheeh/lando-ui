@@ -45,7 +45,8 @@
                         </div>
                         <div class="column">
                             {% if tree.reason %}
-                            Reason: {{ tree.reason }}, Category {{ tree.tags[0] }}
+                                <p>Reason: <b>{{ tree.reason }}</b></p>
+                                <p>Reason category: <b>{{ tree.tags[0] }}</b></p>
                             {% endif %}
                         </div>
                         <div class="column">
