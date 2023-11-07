@@ -210,7 +210,8 @@ def build_recent_changes_stack(
         if not exc.detail:
             raise exc
 
-        return jsonify(errors=errors), 500
+        flash(f"Could not retrieve recent changes stack: {exc.detail}.", "error")
+        return []
 
     return [
         (
