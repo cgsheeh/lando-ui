@@ -19,7 +19,6 @@
     </div>
     <div class="container">
         {% for log_update_form, log in logs %}
-            <!-- TODO can we display these as a graph similar to existing view? worth doing? -->
             <form action="{{ url_for("treestatus.update_log", id=log.id) }}" method="post">
                 {{ log_update_form.csrf_token }}
 
