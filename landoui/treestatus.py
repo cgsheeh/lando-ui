@@ -493,7 +493,9 @@ def update_change(id: int):
 
         flash_message = "Status change updated."
     else:
-        raise Exception("TODO")
+        # This should not happen, but just in case.
+        flash("Invalid submit input on change update form.", "error")
+        return redirect(request.referrer)
 
     try:
         response = api.request(
