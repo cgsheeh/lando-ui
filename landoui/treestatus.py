@@ -282,16 +282,13 @@ def treestatus_tree(tree: str):
     )
 
 
-# TODO test this.
-# TODO clearing reason doesn't work here
 def build_update_json_body(
     reason: Optional[str], reason_category: Optional[str]
 ) -> dict:
     """Return a `dict` for use as a JSON body in a log/change update."""
     json_body = {}
 
-    if reason:
-        json_body["reason"] = reason
+    json_body["reason"] = reason
 
     if reason_category and ReasonCategory.is_valid_reason_category(reason_category):
         json_body["tags"] = [reason_category]
