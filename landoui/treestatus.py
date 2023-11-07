@@ -350,11 +350,15 @@ def update_treestatus():
     )
     treestatus_update_trees_form = TreeStatusUpdateTreesForm()
 
-    errors = []
+    if not treestatus_update_trees_form.validate_on_submit():
+        # Flash errors to the original tree elect menu. The only error
+        # here should be about missing tree selection.
+        for errors in treestatus_update_trees_form.errors.values():
+            for error in errors:
+                flash(error, "warning")
 
-    if not is_user_authenticated_TODO():
-        # TODO fix this.
-        return jsonify(errors=["Not authenticated."]), 401
+        # Return the result of re-rendering the form, so the inputs are the same.
+        return update_treestatus_form()
 
     # Retrieve data from the form.
     trees = treestatus_update_trees_form.trees.data
