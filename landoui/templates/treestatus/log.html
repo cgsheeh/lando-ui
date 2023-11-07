@@ -50,9 +50,11 @@
                             </div>
                         </div>
                         <div class="column is-narrow">
-                            <div class="log-update-visible">
-                                <button class="button is-small is-primary log-update-edit" type="button">Edit</button>
-                            </div>
+                            {% if is_user_authenticated_TODO() %}
+                                <div class="log-update-visible">
+                                    <button class="button is-small is-primary log-update-edit" type="button">Edit</button>
+                                </div>
+                            {% endif %}
                             <div class="log-update-hidden">
                                 <button class="button delete is-normal log-update-edit" type="button"></button>
                                 <button class="button is-small is-primary">Update</button>
