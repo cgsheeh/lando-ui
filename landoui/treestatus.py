@@ -402,8 +402,13 @@ def treestatus_tree(tree: str):
     )
 
     logs_response = api.request("GET", f"treestatus/trees/{tree}/logs")
-    # TODO if we don't get any response we should perhaps render a message/error
-    logs = logs_response.get("result") or []
+    logs = logs_response.get("result")
+    if not logs:
+        flash(
+            f"Could not retrieve status logs for {tree} from Lando, try again later.",
+            "error",
+        )
+        return redirect(request.referrer)
 
     logs = [
         (
