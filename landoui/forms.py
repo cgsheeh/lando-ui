@@ -30,12 +30,6 @@ from wtforms.validators import (
     optional,
 )
 
-TREESTATUS_CHOICES = [
-    ("open", "Open"),
-    ("closed", "Closed"),
-    ("approval required", "Approval Required"),
-]
-
 
 class JSONDecodable:
     def __init__(
@@ -137,6 +131,19 @@ class UserSettingsForm(FlaskForm):
     reset_phab_api_token = BooleanField("Delete", default="")
 
 
+class Status(enum.Enum):
+    """Allowable statuses of a tree."""
+
+    OPEN = "Open"
+    CLOSED = "Closed"
+    APPROVAL_REQUIRED = "Approval required"
+
+    @classmethod
+    def to_choices(cls) -> list[tuple[str, str]]:
+        """Return a list of choices for display."""
+        return [(choice.value.lower(), choice.value) for choice in list(cls)]
+
+
 class ReasonCategory(enum.Enum):
     """Allowable reasons for a Tree closure."""
 
@@ -202,7 +209,7 @@ class TreeStatusUpdateTreesForm(FlaskForm):
 
     status = SelectField(
         "Status",
-        choices=TREESTATUS_CHOICES,
+        choices=Status.to_choices(),
         validators=[InputRequired("A status is required.")],
     )
 
