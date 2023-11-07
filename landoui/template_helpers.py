@@ -27,10 +27,12 @@ template_helpers = Blueprint("template_helpers", __name__)
 def is_user_authenticated() -> bool:
     return helpers.is_user_authenticated()
 
+
 # TODO remove this
 @template_helpers.app_template_global()
 def is_user_authenticated_TODO() -> bool:
     return helpers.is_user_authenticated_TODO()
+
 
 @template_helpers.app_template_global()
 def user_has_phabricator_token() -> bool:
@@ -340,6 +342,9 @@ def message_type_to_notification_class(flash_message_category: str) -> str:
     See https://bulma.io/documentation/elements/notification/ for the list of
     Bulma notification states.
     """
-    return {"info": "is-info", "success": "is-success", "warning": "is-warning"}.get(
-        flash_message_category, "is-info"
-    )
+    return {
+        "error": "is-danger",
+        "info": "is-info",
+        "success": "is-success",
+        "warning": "is-warning",
+    }.get(flash_message_category, "is-info")
