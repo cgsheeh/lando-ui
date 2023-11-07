@@ -17,9 +17,7 @@ from wtforms import (
     Field,
     FieldList,
     HiddenField,
-    IntegerField,
     SelectField,
-    SelectMultipleField,
     StringField,
     SubmitField,
     TextAreaField,
@@ -27,7 +25,6 @@ from wtforms import (
     widgets,
 )
 from wtforms.validators import (
-    DataRequired,
     InputRequired,
     Regexp,
     ValidationError,
