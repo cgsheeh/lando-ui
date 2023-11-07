@@ -146,7 +146,8 @@ def update_treestatus():
             for error in errors:
                 flash(error, "warning")
 
-        # Return the result of re-rendering the form, so the inputs are the same.
+        # Return the result of re-rendering the form, so the current state of
+        # the form is preserved.
         return update_treestatus_form()
 
     # Retrieve data from the form.
