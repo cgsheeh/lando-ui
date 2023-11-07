@@ -20,8 +20,6 @@ from flask import (
 
 from landoui.helpers import (
     get_phabricator_api_token,
-    is_user_authenticated,
-    is_user_authenticated_TODO,
     set_last_local_referrer,
 )
 from landoui.landoapi import (
