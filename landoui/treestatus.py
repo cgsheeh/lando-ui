@@ -159,7 +159,7 @@ def update_treestatus():
     remember = treestatus_update_trees_form.remember_this_change.data
 
     try:
-        response = api.request(
+        api.request(
             "PATCH",
             "treestatus/trees",
             # TODO re-add auth0 requirement.
@@ -213,7 +213,7 @@ def new_tree_handler(api: LandoAPI, form: TreeStatusNewTreeForm):
     tree = form.tree.data
 
     try:
-        response = api.request(
+        api.request(
             "PUT",
             f"treestatus/trees/{tree}",
             # TODO re-enable auth0 requirement.
@@ -343,7 +343,7 @@ def update_change(id: int):
         return redirect(request.referrer)
 
     try:
-        response = api.request(
+        api.request(
             method,
             f"treestatus/stack/{id}",
             # TODO re-enable auth0 requirement.
@@ -377,7 +377,7 @@ def update_log(id: int):
     json_body = build_update_json_body(reason, reason_category)
 
     try:
-        response = api.request(
+        api.request(
             "PATCH",
             f"treestatus/log/{id}",
             json=json_body,
