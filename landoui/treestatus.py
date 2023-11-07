@@ -410,6 +410,8 @@ def treestatus_tree(tree: str):
         )
         return redirect(request.referrer)
 
+    current_log = logs[0]
+
     logs = [
         (
             TreeStatusLogUpdateForm(
@@ -428,6 +430,7 @@ def treestatus_tree(tree: str):
 
     return render_template(
         "treestatus/log.html",
+        current_log=current_log,
         logs=logs,
         recent_changes_stack=recent_changes_stack,
         tree=tree,
