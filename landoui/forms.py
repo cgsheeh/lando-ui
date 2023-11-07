@@ -27,7 +27,6 @@ from wtforms import (
 from wtforms.validators import (
     InputRequired,
     Regexp,
-    ValidationError,
     optional,
 )
 
