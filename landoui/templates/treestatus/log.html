@@ -31,10 +31,12 @@
                             <div class="block"><b>{{ log.when }}</b></div>
                             <div class="block"><h2 class="subtitle">{{ log.who }}</h2></div>
                             <div class="block">
-                                <div class="log-update-visible">
-                                    <p>{{ log_update_form.reason.label }}: <b>{{ log.reason }}</b></p>
-                                    <p>{{ log_update_form.reason_category.label }}: <b>{{ log_update_form.reason_category.data }}</b></p>
-                                </div>
+                                {% if log.reason %}
+                                    <div class="log-update-visible">
+                                        <p>{{ log_update_form.reason.label }}: <b>{{ log.reason }}</b></p>
+                                        <p>{{ log_update_form.reason_category.label }}: <b>{{ log_update_form.reason_category.data }}</b></p>
+                                    </div>
+                                {% endif %}
                                 <div class="log-update-hidden">
                                     <div class="field">
                                         <label class="label">{{ log_update_form.reason.label }}</label>
