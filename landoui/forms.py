@@ -178,10 +178,19 @@ class ReasonCategory(enum.Enum):
 class TreeStatusSelectTreesForm(FlaskForm):
     """Form used to select trees for updating."""
 
-    trees = SelectMultipleField(
-        "Trees",
-        validators=[DataRequired("A selection of trees is required.")],
+    trees = FieldList(
+        StringField(
+            "Trees",
+            widget=widgets.HiddenInput(),
+        ),
     )
+
+    def validate_trees(self, field):
+        """Validate that at least 1 tree was selected."""
+        if not field.entries:
+            raise ValidationError(
+                "A selection of trees is required to update statuses."
+            )
 
 
 class TreeStatusUpdateTreesForm(FlaskForm):
@@ -190,7 +199,9 @@ class TreeStatusUpdateTreesForm(FlaskForm):
     trees = FieldList(
         StringField(
             "Trees",
-            validators=[InputRequired("A selection of trees is required.")],
+            validators=[
+                InputRequired("A selection of trees is required to update statuses.")
+            ],
             widget=widgets.HiddenInput(),
         )
     )

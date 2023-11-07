@@ -242,7 +242,8 @@ def treestatus():
     trees_response = api.request("GET", "treestatus/trees")
     trees = trees_response.get("result")
 
-    treestatus_select_trees_form.trees.choices = [(tree, tree) for tree in trees.keys()]
+    for tree in trees:
+        treestatus_select_trees_form.trees.append_entry(tree)
 
     recent_changes_stack = build_recent_changes_stack(api)
 
@@ -315,21 +316,18 @@ def update_treestatus_form():
         auth0_access_token=session.get("access_token"),
         phabricator_api_token=token,
     )
+
     treestatus_select_trees_form = TreeStatusSelectTreesForm()
+    if not treestatus_select_trees_form.validate_on_submit():
+        # Validate the tree selection form was submitted with at least one
+        # tree selected.
+        for errors in treestatus_select_trees_form.errors.values():
+            for error in errors:
+                flash(error, "warning")
 
-    # TODO figure out how to validate this in a better way.
-    # if not treestatus_select_trees_form.validate():
-    #     errors = list(chain(*treestatus_select_trees_form.errors.values()))
-    #     return jsonify(errors=errors), 400
-
-    # Retrieve trees from the selection form.
-    trees = treestatus_select_trees_form.trees.data
+        return redirect(request.referrer)
 
     treestatus_update_trees_form = TreeStatusUpdateTreesForm()
-
-    # Add each input from the selection form to the update form.
-    for tree in trees:
-        treestatus_update_trees_form.trees.append_entry(tree)
 
     recent_changes_stack = build_recent_changes_stack(api)
 
@@ -351,8 +349,6 @@ def update_treestatus():
     treestatus_update_trees_form = TreeStatusUpdateTreesForm()
 
     if not treestatus_update_trees_form.validate_on_submit():
-        # Flash errors to the original tree elect menu. The only error
-        # here should be about missing tree selection.
         for errors in treestatus_update_trees_form.errors.values():
             for error in errors:
                 flash(error, "warning")
